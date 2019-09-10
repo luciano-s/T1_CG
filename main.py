@@ -3,49 +3,56 @@ import tkinter as tk
 
 class App(tk.Frame):
 
-    def __init__(self, master=None, itens=None):
-        super().__init__(master)
+    def __init__(self, master=None):
         self.master = master
-        self.itens = itens
-        self.pack()
+        # self.itens = itens
+        self.menu = None
+        # self.pack()
         self.create_window()
     
-
-    def say_hi(self):
-        print("hi there, everyone!")
-
-
+    def func1(self):
+        print('Call the drawing_line screen')
+ 
+    def func2(self):
+        print('Call the drawing_circumference screen')
+    
+    def func3(self):
+        print('Call the drawing_house screen')
     def create_window(self):
-        if self.itens==None:
-            return None
-        add_itens = []
-        for i in self.itens:
-            menu = tk.Menu(self.master)
-            add_itens.append(tk.Menu(menu))
-        c = 0
-        for i in self.itens:
-            new_item = add_itens[c]
-            new_item.add_command(label='Novo')
-            menu.add_cascade(label=i, menu=new_item)
-            self.master.config(menu=menu)
-            c+=1
+        self.menu = tk.Menu(self.master) 
+        self.master.config(menu=self.menu)
+        
+        line = tk.Menu(self.menu)
+        circ = tk.Menu(self.menu)
+        house = tk.Menu(self.menu)
 
-class Controller():
+        line.add_command(label='New', command=self.func1)
+        circ.add_command(label='New', command=self.func2)
+        house.add_command(label='New', command=self.func3)
+
+        self.menu.add_cascade(label='Line', menu=line)
+        self.menu.add_cascade(label='Circumference', menu=circ)
+        self.menu.add_cascade(label='House', menu=house)
+
+
+        
+       
+        
+
+
+class Controller:
     
     @classmethod
-
-    def create_window(cls, itens=None):
+    def create_window(cls):
         window = tk.Tk()
-        window.minsize(250, 300)
-        app = App(window, itens)
+        window.minsize(350, 300)
+        app = App(window)
         app.create_window()
-        app.mainloop()
+        window.mainloop()
 
 def main():
     itens = ['Linha', 'Circunferência', 'Objeto']
-    Controller.create_window(itens)
-    
-    
+    Controller.create_window()
     
 main()
 

@@ -1,8 +1,18 @@
+from PIL import Image, ImageDraw
+from tkinter import *
+
 class CG:
 
-    def line_breasenham(poin1, poin2):
-        pass
-    
+    def line_breasenham(point1, point2, root):
+        x1, y1 = point1
+        x2, y2 = point2
+        
+        line = []
+        BLUE  = '#0000ff'
+        BLACK = '#000000'
+        for i in range(100, 300):
+                Canvas.create_bitmap(i, 300)
+
 
     def circunference_bresenham(center, r):
         pass
