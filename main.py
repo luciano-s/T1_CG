@@ -10,13 +10,13 @@ class App(tk.Frame):
         # self.pack()
         self.create_window()
     
-    def func1(self):
+    def call_draw_line(self):
         print('Call the drawing_line screen')
  
-    def func2(self):
+    def call_draw_circ(self):
         print('Call the drawing_circumference screen')
     
-    def func3(self):
+    def call_draw_house(self):
         print('Call the drawing_house screen')
     def create_window(self):
         self.menu = tk.Menu(self.master) 
@@ -26,9 +26,9 @@ class App(tk.Frame):
         circ = tk.Menu(self.menu)
         house = tk.Menu(self.menu)
 
-        line.add_command(label='New', command=self.func1)
-        circ.add_command(label='New', command=self.func2)
-        house.add_command(label='New', command=self.func3)
+        line.add_command(label='New', command=self.call_draw_line)
+        circ.add_command(label='New', command=self.call_draw_circ)
+        house.add_command(label='New', command=self.call_draw_house)
 
         self.menu.add_cascade(label='Line', menu=line)
         self.menu.add_cascade(label='Circumference', menu=circ)
