@@ -27,11 +27,11 @@ class Callbacks():
         house.add_command('New', command=draw_house)
 
 
-    def draw_circ():
+    def draw_circ(self):
         pass
 
 
-    def draw_house():
+    def draw_house(self):
         pass
 
 

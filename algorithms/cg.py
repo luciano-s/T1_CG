@@ -149,7 +149,7 @@ class CG:
     # formato da lista de pontos ^
         for points in points_list:
             x0, y0, x1, y1 = points
-            self.line_breasenham(x0, y0, x1, y1, canvas)
+            CG.line_breasenham(x0, y0, x1, y1, canvas)
 
 
     @classmethod

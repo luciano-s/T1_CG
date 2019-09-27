@@ -27,7 +27,7 @@ class App():
         # if self.canvas is not None:
             # self.canvas.delete('all')
         # canvas = create_draw_field('line')
-        canvas = tk.Canvas(self.master, height=2000, width=2000, background="#000000")
+        canvas = Canvas(self.master, height=2000, width=2000, background="#000000")
         canvas.grid(row=0, column=0)
         canvas.bind("<Button-1>", self.mouse_click_line)
         canvas.bind("<ButtonRelease-1>", self.mouse_release_line)
@@ -37,7 +37,7 @@ class App():
     def call_draw_circ(self):
         # if self.canvas is not None:
         #     self.canvas.delete('all')
-        canvas = tk.Canvas(self.master, height=2000, width=2000, background="#000000")
+        canvas = Canvas(self.master, height=2000, width=2000, background="#000000")
         canvas.grid(row=0, column=0)
         canvas.bind("<Button-1>", self.mouse_click_circ)
         canvas.bind("<ButtonRelease-1>", self.mouse_release_circ)
@@ -47,19 +47,19 @@ class App():
     def call_draw_house(self):
         # if self.canvas is not None:
         #     self.canvas.delete('all')
-        canvas = tk.Canvas(self.master, height=2000, width=2000, background="#000000")
+        canvas = Canvas(self.master, height=2000, width=2000, background="#000000")
         canvas.grid(row=0, column=0)
         canvas.bind("<Button-1>", self.mouse_click_house)
         canvas.bind("<ButtonRelease-1>", self.mouse_release_house)
         canvas.pack()
 
     def create_window(self):
-        self.menu = tk.Menu(self.master) 
+        self.menu = Menu(self.master) 
         self.master.config(menu=self.menu)
         
-        line = tk.Menu(self.menu)
-        circ = tk.Menu(self.menu)
-        house = tk.Menu(self.menu)
+        line = Menu(self.menu)
+        circ = Menu(self.menu)
+        house= Menu(self.menu)
 
         line.add_command(label='New', command=self.call_draw_line)
         circ.add_command(label='New', command=self.call_draw_circ)
