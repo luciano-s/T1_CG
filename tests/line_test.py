@@ -29,11 +29,6 @@ class Callbacks():
         
         draw_line(self.x1, self.y1, self.x2, self.y2, self.canvas)
         
-    def get_point1(self):
-        return self.x1, self.y1
-    
-    def get_point2(self):
-        return self.x2, self.y2
 
     def get_root(self):
         return self.root

@@ -13,7 +13,26 @@ class Callbacks():
         self.canvas.bind("<Button-1>", self.mouse_click)
         self.canvas.bind("<ButtonRelease-1>", self.mouse_release)
         self.canvas.pack()
+        self.init_widgets()
         self.root.mainloop()
+
+
+    def init_widgets(self):
+        menu  = Menu(self.root)
+        line  = Menu(menu)
+        circ  = Menu(menu)
+        house = Menu(menu)
+        line.add_command('New', command=draw_line)
+        circ.add_command('New', command=draw_circ)
+        house.add_command('New', command=draw_house)
+
+
+    def draw_circ():
+        pass
+
+
+    def draw_house():
+        pass
 
 
     def mouse_click(self, event):
@@ -38,67 +57,121 @@ class Callbacks():
     def get_root(self):
         return self.root
 
+def draw_object(points_list, canvas):
+    # [(x0_0, y0_0, x1_0, y1_0), (x0_1, y0_1, x1_1, y1_1), ...]
+    # formato da lista de pontos ^
+        for points in points_list:
+            x0, y0, x1, y1 = points
+            draw_line(x0, y0, x1, y1, canvas)
+
 def draw_line(x0, y0, x1, y1, canvas):
     #desenha retas no octante 8
     dx = abs(x1-x0)
     dy = abs(y1-y0)
     eps = 0
-    
-    if (dy < dx):
-        if x0 < x1: # caso em que o x inicial é menor que o x final
-            if y0 < y1: # caso em que o y inicial é menor que o y final
+    d = 0
+    if (dy < dx): #x cresce mais rápido do que y
+        if x0 < x1: #esquerda->direita
+        
+            if y0 < y1: #cima->baixo
+            #octante 1
                 y = y0
                 for x in range(x0, x1+1):
                     canvas.create_line(x, y, x+1, y+1, fill='white')
-                    eps += dy
-                    if (2*eps >= dx):   
+                    if d < 0:
+                        d += dy
+                        
+                    else:
+                        d += dy-dx
                         y +=1
-                        eps -= dx
-            else: #y1 <= y0 caso em que o y final é menor que o y inicial
+            else: #baixo->cima
+            #octante 8
                 y = y0
                 for x in range(x0, x1+1):
                     canvas.create_line(x, y, x+1, y+1, fill='white')
-                    eps += dy
-                    if (2*eps >= dx):   
-                        y -=1
-                        eps -= dx
-    else: # caso em que o x final é menor que o inicial
-        if y0 < y1: # caso em que o y inicial é menor que o y final
-            y = y0
-            for x in range(x1, x0):
-                canvas.create_line(x, y, x+1, y+1, fill='white')
-                eps += dy
-                if (2*eps >= dx):   
-                    y +=1
-                    eps -= dx
-            else: #y1 <= y0 caso em que o y final é menor que o y inicial
+                    if d < 0:
+                        d+=dy
+
+                    else:
+                        d+= dy-dx
+                        y-=1
+        else: #direita->esquerda
+            if y0 < y1: #cima->baixo
+            #octante 4
+                y = y0
+                
+
+                for x in range(x0, x1, -1):
+                    canvas.create_line(x, y, x+1, y+1, fill='white')
+                    if d < 0:
+                        d+=dy
+
+                    else:
+                        d+= dy-dx
+                        y+=1
+            else: #baixo->cima
+            #octante 5
                 y = y0
                 for x in range(x0, x1, -1):
-                    canvas.create_line(x, y, x-1, y-1, fill='white')
-                    eps += dy
-                    if (2*eps >= dx):   
-                        y -=1
-                        eps -= dx
+                    canvas.create_line(x, y, x+1, y+1, fill='white')
+                    if d < 0:
+                        d+=dy
 
-
-
-def set_octant(i, j, o):
+                    else:
+                        d+= dy-dx
+                        y-=1
     
-    if o==1:
-        return i, j
-    if o ==2:
-        return j, i
-    if o ==3:
-        return -j, i
-    if o==4:
-        return -i, j
-    if o==5:
-        return -i, -j
-    if o==6:
-        return j, -i
-    if o==7:
-        return i, -j
-    
+    else: #y cresce mais rapido
+        if y0 < y1:
+            #cima -> baixo
+            if x0 < x1:
+                #esquerda->direita
+                #octeto 2
+                x = x0
+                for y in range(y0, y1):
+                    canvas.create_line(x, y, x+1, y+1, fill='white')
+                    if 0 < d:
+                        d -= dx
+                    else:
+                        d += dy-dx  
+                        x+=1
+            else:
+                #direita->esquerda
+                #octeto 3
+                x = x0
+                for y in range(y0, y1+1):
+                    canvas.create_line(x, y, x+1, y+1, fill='white')
+                    if 0 < d:
+                        d-= dx
+                    else:
+                        d+= dy-dx
+                        x-=1
+
+        else:
+            if x0 < x1:
+                #esquerda->direita
+                #octeto 7
+                x = x0
+                for y in range(y0, y1, -1):
+                    canvas.create_line(x, y, x+1, y+1, fill='white')
+                    if 0 < d:
+                        d-= dx
+                    else:
+                        d+= dy-dx
+                        x+=1                    
+            else:
+                #direita->esquerda
+                #octeto 6
+                x = x0
+                for y in range(y0, y1, -1):
+                    canvas.create_line(x, y, x+1, y+1, fill='white')
+                    if 0 < d:
+                        d-= dx
+                    else:
+                        d+= dy-dx
+                        x-=1                    
+
+
 
 
 C = Callbacks()
