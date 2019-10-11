@@ -182,7 +182,7 @@ def main():
     a = CS(canvas)
     
     
-    a.set_canvas(canvas)
+    # a.set_canvas(canvas)
     canvas.bind("<Button-1>", a.mouse_click)
     canvas.bind("<ButtonRelease-1>", a.mouse_release)
     root.title('Cohen-Sutherland')

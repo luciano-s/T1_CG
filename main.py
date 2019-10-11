@@ -1,5 +1,6 @@
 from algorithms.cg import CG
 import tkinter as tk
+from tests.cs_class import *
 from math import floor
 
 
@@ -29,7 +30,7 @@ class App():
         self.house.add_command(label='Rotação', command=None)
         self.house.add_command(label='Cisalhamento', command=None)
         self.house.add_command(label='Projeção Cavaleira', command=None)
-        self.cs.add_command(label='Nova Janela', command = None)
+        self.cs.add_command(label='Nova Janela', command = self.call_cohen_sutherland)
 
         #adiciona os itens de menu ao menubar
         self.menu.add_cascade(label='Linha', menu=self.line)
@@ -72,11 +73,12 @@ class App():
         CG.circunferencia(self.x1, self.y1, r, self.canvas)
 
 
-    def mouse_click_cs(self):
-        pass
+    def mouse_click_cs(self, event):
+        print("Mouse position: (%s %s)" % (event.x, event.y))
+        
 
 
-    def mouse_release_cs(self):
+    def mouse_release_cs(self, event):
         pass
 # ----------FIM MÉTODOS DE MONITORAMENTO DE EVENTOS DE MOUSE-------------- #
 
@@ -88,7 +90,7 @@ class App():
         if self.canvas:
             self.canvas.delete('all')
             self.canvas = None
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#000000")
+        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         self.canvas.bind("<Button-1>", self.mouse_click_line)
         self.canvas.bind("<ButtonRelease-1>", self.mouse_release_line)
@@ -98,21 +100,25 @@ class App():
         if self.canvas:
             self.canvas.delete('all')
             self.canvas = None
+
         
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#000000")
+        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         self.canvas.bind("<Button-1>", self.mouse_click_circ)
         self.canvas.bind("<ButtonRelease-1>", self.mouse_release_circ)
         
     
-    def cohen_sutherland(self):
+    def call_cohen_sutherland(self):
         if self.canvas:
             self.canvas.delete('all')
             self.canvas = None
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#000000")
+        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
         self.canvas.grid(row=0, column=0)
-        self.canvas.bind("<Button-1>", self.mouse_click_cs)
-        self.canvas.bind("<ButtonRelease-1>", self.mouse_cs)
+        
+        a = CS(self.canvas)
+        self.canvas.bind("<Button-1>", a.mouse_click)
+        self.canvas.bind("<ButtonRelease-1>", a.mouse_release)
+
 
     def call_draw_house(self):
         if self.canvas:
