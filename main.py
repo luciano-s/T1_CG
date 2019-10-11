@@ -24,6 +24,7 @@ class App():
         #adiciona os elementos aos itens de menu
         self.line.add_command(label='Novo', command=self.call_draw_line)
         self.circ.add_command(label='Novo', command=self.call_draw_circ)
+        self.house.add_command(label='Novo', command=self.call_draw_house)
         self.house.add_command(label='Escala Local', command=None)
         self.house.add_command(label='Escala Global', command=None)
         self.house.add_command(label='Translação', command=None)
@@ -31,7 +32,7 @@ class App():
         self.house.add_command(label='Cisalhamento', command=None)
         self.house.add_command(label='Projeção Cavaleira', command=None)
         self.cs.add_command(label='Nova Janela', command = self.call_cohen_sutherland)
-
+        
         #adiciona os itens de menu ao menubar
         self.menu.add_cascade(label='Linha', menu=self.line)
         self.menu.add_cascade(label='Circunferência', menu=self.circ)
@@ -73,13 +74,7 @@ class App():
         CG.circunferencia(self.x1, self.y1, r, self.canvas)
 
 
-    def mouse_click_cs(self, event):
-        print("Mouse position: (%s %s)" % (event.x, event.y))
-        
-
-
-    def mouse_release_cs(self, event):
-        pass
+    
 # ----------FIM MÉTODOS DE MONITORAMENTO DE EVENTOS DE MOUSE-------------- #
 
 
