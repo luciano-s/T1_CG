@@ -45,7 +45,7 @@ class CG:
                     # octante 1
                     y = y0
                     for x in range(x0, x1+1):
-                        canvas.create_line(x, y, x+1, y+1, fill='white')
+                        canvas.create_line(x, y, x+1, y+1, fill='#000000')
                         if d < 0:
                             d += dy
 
@@ -56,7 +56,7 @@ class CG:
                     # octante 8
                     y = y0
                     for x in range(x0, x1+1):
-                        canvas.create_line(x, y, x+1, y+1, fill='white')
+                        canvas.create_line(x, y, x+1, y+1, fill='#000000')
                         if d < 0:
                             d += dy
 
@@ -69,7 +69,7 @@ class CG:
                     y = y0
 
                     for x in range(x0, x1, -1):
-                        canvas.create_line(x, y, x+1, y+1, fill='white')
+                        canvas.create_line(x, y, x+1, y+1, fill='#000000')
                         if d < 0:
                             d += dy
 
@@ -80,7 +80,7 @@ class CG:
                     # octante 5
                     y = y0
                     for x in range(x0, x1, -1):
-                        canvas.create_line(x, y, x+1, y+1, fill='white')
+                        canvas.create_line(x, y, x+1, y+1, fill='#000000')
                         if d < 0:
                             d += dy
 
@@ -131,7 +131,7 @@ class CG:
                     # octeto 6
                     x = x0
                     for y in range(y0, y1, -1):
-                        canvas.create_line(x, y, x+1, y+1, fill='white')
+                        canvas.create_line(x, y, x+1, y+1, fill='#000000')
                         if 0 < d:
                             d -= dx
                         else:
@@ -140,14 +140,14 @@ class CG:
 
     @classmethod
     def draw_circle(cls, xc, yc, x, y, canvas):
-        canvas.create_line(xc+x, yc+y, (xc+x)+1, (yc+y)+1, fill='white')
-        canvas.create_line(xc-x, yc+y, (xc-x)+1, (yc+y)+1, fill='white')
-        canvas.create_line(xc+x, yc-y, (xc+x)+1, (yc-y)+1, fill='white')
-        canvas.create_line(xc-x, yc-y, (xc-x)+1, (yc-y)+1, fill='white')
-        canvas.create_line(xc+y, yc+x, (xc+y)+1, (yc+x)+1, fill='white')
-        canvas.create_line(xc-y, yc+x, (xc-y)+1, (yc+x)+1, fill='white')
-        canvas.create_line(xc+y, yc-x, (xc+y)+1, (yc-x)+1, fill='white')
-        canvas.create_line(xc-y, yc-x, (xc-y)+1, (yc-x)+1, fill='white')
+        canvas.create_line(xc+x, yc+y, (xc+x)+1, (yc+y)+1, fill='#000000')
+        canvas.create_line(xc-x, yc+y, (xc-x)+1, (yc+y)+1, fill='#000000')
+        canvas.create_line(xc+x, yc-y, (xc+x)+1, (yc-y)+1, fill='#000000')
+        canvas.create_line(xc-x, yc-y, (xc-x)+1, (yc-y)+1, fill='#000000')
+        canvas.create_line(xc+y, yc+x, (xc+y)+1, (yc+x)+1, fill='#000000')
+        canvas.create_line(xc-y, yc+x, (xc-y)+1, (yc+x)+1, fill='#000000')
+        canvas.create_line(xc+y, yc-x, (xc+y)+1, (yc-x)+1, fill='#000000')
+        canvas.create_line(xc-y, yc-x, (xc-y)+1, (yc-x)+1, fill='#000000')
 
     @classmethod
     def circunferencia(cls, xc, yc, r, canvas):
