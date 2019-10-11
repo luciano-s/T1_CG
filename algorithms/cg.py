@@ -222,6 +222,43 @@ class CG:
         
         CG.projecao(self,canvas)
 
+    def escala_3D(self, eixo, fator, canvas):
+        if eixo == 'x':
+            self.A[0] = self.A[0] * fator
+            self.B[0] = self.B[0] * fator
+            self.C[0] = self.C[0] * fator
+            self.D[0] = self.D[0] * fator
+            self.E[0] = self.E[0] * fator
+            self.F[0] = self.F[0] * fator
+            self.G[0] = self.G[0] * fator
+            self.H[0] = self.H[0] * fator
+            self.I[0] = self.I[0] * fator
+            self.J[0] = self.J[0] * fator
+        elif eixo == 'y':
+            self.A[1] = self.A[1] * fator
+            self.B[1] = self.B[1] * fator
+            self.C[1] = self.C[1] * fator
+            self.D[1] = self.D[1] * fator
+            self.E[1] = self.E[1] * fator
+            self.F[1] = self.F[1] * fator
+            self.G[1] = self.G[1] * fator
+            self.H[1] = self.H[1] * fator
+            self.I[1] = self.I[1] * fator
+            self.J[1] = self.J[1] * fator
+        else:
+            self.A[2] = self.A[2] * fator
+            self.B[2] = self.B[2] * fator
+            self.C[2] = self.C[2] * fator
+            self.D[2] = self.D[2] * fator
+            self.E[2] = self.E[2] * fator
+            self.F[2] = self.F[2] * fator
+            self.G[2] = self.G[2] * fator
+            self.H[2] = self.H[2] * fator
+            self.I[2] = self.I[2] * fator
+            self.J[2] = self.J[2] * fator
+        
+        CG.projecao(self,canvas)
+
     def cavaleira(self, canvas):
         self.projecao = 'cav'
         Mc = np.array([[1, 0, 0, 0],
@@ -427,6 +464,8 @@ def main():
     #a.translacao_3D('y', 300, canvas)
     #a.ortogonal(canvas, 'y')
     #a.translacao_3D('x', 200, canvas)
+    # a.cabinet(canvas)
+    #a.escala_3D('x', 2, canvas)
     root.mainloop()
 
 
