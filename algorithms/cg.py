@@ -185,7 +185,7 @@ class CG:
         else:
             self.cabinet(canvas)
 
-    def translacao_3D(self, eixo, deslocamento, canvas):
+    def translacao_3D(self, eixo, deslocamento, canvas, projetar):
         if eixo == 'x':
             self.A[0] = self.A[0] + deslocamento
             self.B[0] = self.B[0] + deslocamento
@@ -219,8 +219,8 @@ class CG:
             self.H[2] = self.H[2] + deslocamento
             self.I[2] = self.I[2] + deslocamento
             self.J[2] = self.J[2] + deslocamento
-        
-        CG.projecao(self,canvas)
+        if projetar :
+            CG.projecao(self,canvas)
 
     def escala_3D(self, eixo, fator, canvas):
         if eixo == 'x':
@@ -257,6 +257,51 @@ class CG:
             self.I[2] = self.I[2] * fator
             self.J[2] = self.J[2] * fator
         
+        CG.projecao(self,canvas)
+
+    def rotacao_3D(self, canvas, plano, graus):
+        x_medio = (self.A[0]+self.B[0]+self.C[0]+self.D[0]+self.E[0]+self.F[0]+self.G[0]+self.H[0]+self.I[0]+self.J[0])/10 
+        y_medio = (self.A[1]+self.B[1]+self.C[1]+self.D[1]+self.E[1]+self.F[1]+self.G[1]+self.H[1]+self.I[1]+self.J[1])/10 
+        z_medio = (self.A[2]+self.B[2]+self.C[2]+self.D[2]+self.E[2]+self.F[2]+self.G[2]+self.H[2]+self.I[2]+self.J[2])/10 
+        
+        self.translacao_3D('x', -x_medio, canvas, False)
+        self.translacao_3D('y', -y_medio, canvas, False)
+        self.translacao_3D('z', -z_medio, canvas, False)
+
+        if plano == 'z':
+            Mc = np.array([[math.cos(graus), -math.sin(graus), 0, 0],
+                           [math.sin(graus), math.cos(graus), 0, 0],
+                           [0, 0, 1, 0],
+                           [0, 0, 0, 1]])
+            print("rotação em z")
+        elif plano == 'y':
+            Mc = np.array([[math.cos(graus), 0, -math.sin(graus), 0],
+                           [0, 1, 0, 0],
+                           [math.sin(graus), 0, math.cos(graus), 0],
+                           [0, 0, 0, 1]])
+            print("rotação em y")
+        else:
+            Mc = np.array([[1, 0, 0, 0],
+                           [0, math.cos(graus), -math.sin(graus), 0],
+                           [0, math.sin(graus), math.cos(graus), 0],
+                           [0, 0, 0, 1]])
+            print("rotação em x")
+
+        self.A = np.dot(np.array(self.A), Mc)
+        self.B = np.dot(np.array(self.B), Mc)
+        self.C = np.dot(np.array(self.C), Mc)
+        self.D = np.dot(np.array(self.D), Mc)
+        self.E = np.dot(np.array(self.E), Mc)
+        self.F = np.dot(np.array(self.F), Mc)
+        self.G = np.dot(np.array(self.G), Mc)
+        self.H = np.dot(np.array(self.H), Mc)
+        self.I = np.dot(np.array(self.I), Mc)
+        self.J = np.dot(np.array(self.J), Mc)
+
+        self.translacao_3D('x', x_medio, canvas, False)
+        self.translacao_3D('y', y_medio, canvas, False)
+        self.translacao_3D('z', z_medio, canvas, False)
+
         CG.projecao(self,canvas)
 
     def cavaleira(self, canvas):
@@ -442,9 +487,6 @@ class CG:
         canvas.create_line(int(self.I2[coord1]), int(self.I2[coord2]), int(
             self.J2[coord1]), int(self.J2[coord2]), fill='black')
 
-    @classmethod
-    def rotation_3D(cls):
-        pass
 
     @classmethod
     def shearing_3D(cls):
@@ -459,13 +501,15 @@ def main():
     canvas.grid(row=0, column=0)
     a = CG()
     #a.cavaleira(canvas)
-    #a.translacao_3D('x', 300, canvas)
+    #a.translacao_3D('x', 300, canvas, True)
     #a.cabinet(canvas)
-    #a.translacao_3D('y', 300, canvas)
+    #a.translacao_3D('y', 300, canvas, True)
     #a.ortogonal(canvas, 'y')
-    #a.translacao_3D('x', 200, canvas)
-    # a.cabinet(canvas)
+    #a.translacao_3D('x', 200, canvas, True)
+    a.ortogonal(canvas, 'z')
+    a.translacao_3D('x', 500, canvas, False)
     #a.escala_3D('x', 2, canvas)
+    a.rotacao_3D(canvas, 'y', 90)
     root.mainloop()
 
 
