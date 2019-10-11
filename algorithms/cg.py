@@ -15,17 +15,17 @@ class CG:
         self.H = (150, 200, 220, 1)
         self.I = (200, 200, 150, 1)
         self.J = (200, 200, 100, 1)
-
-        self.A2 = (0,0)
-        self.B2 = (0,0)
-        self.C2 = (0,0)
-        self.D2 = (0,0)
-        self.E2 = (0,0)
-        self.F2 = (0,0)
-        self.G2 = (0,0)
-        self.H2 = (0,0)
-        self.I2 = (0,0)
-        self.J2 = (0,0)
+        self.A2 =(100, 100) 
+        self.B2 =(100, 100) 
+        self.C2 =(150, 100) 
+        self.D2 =(200, 100) 
+        self.E2 =(200, 100) 
+        self.F2 =(100, 200) 
+        self.G2 =(100, 200) 
+        self.H2 =(150, 200) 
+        self.I2 =(200, 200) 
+        self.J2 =(200, 200) 
+       
 
         self.figura = {'A':[self.A, self.A2, 'B', 'E', 'F'], 'B':[self.B, self.B2, 'C', 'D', 'G'],
         'C':[self.C, self.C2, 'D', 'H'],'D':[self.D, self.D2, 'E', 'I'], 'E':[self.E, self.E2, 'J'], 
@@ -177,53 +177,54 @@ class CG:
     
     
     def cavaleira(self):
-        Mc = np.matrix([ [1, 0, 0, 0], [0, 1, 0, 0], 
+        Mc = np.array([ [1, 0, 0, 0], [0, 1, 0, 0], 
         [ ((2)**(1/2))/2, ((2)**(1/2))/2, 0, 0], [0, 0, 0, 1] ]) 
-        
+        #
 
         # print(self.A)
         # print(Mc)
         # self.A = (100, 100, 100, 1)
-        self.A2 = np.array(self.A) * Mc
-        print(f'A2 : {self.A2}')
-        self.A2 = np.array(self.A2)
-        print(f'A2 : {self.A2[:1]}')
-        input()
-        self.B2 = np.array(self.B) * Mc
-        self.B2 = self.B2[:1]
-        self.C2 = np.array(self.C) * Mc
-        self.C2 = self.C2[:1]
-        self.D2 = np.array(self.D) * Mc
-        self.D2 = self.D2[:1]
-        self.E2 = np.array(self.E) * Mc
-        self.E2 = self.E2[:1]
-        self.F2 = np.array(self.F) * Mc
-        self.F2 = self.F2[:1]
-        self.G2 = np.array(self.G) * Mc
-        self.G2 = self.G2[:1]
-        self.H2 = np.array(self.H) * Mc
-        self.H2 = self.H2[:1]
-        self.I2 = np.array(self.I) * Mc
-        self.I2 = self.I2[:1]
-        self.J2 = np.array(self.J) * Mc
-        self.J2 = self.J2[:1]
-                
-        for key in self.figura.keys():
-            if 2 < len(self.figura[key]):
+        self.A2 = np.dot(np.array(self.A),Mc)
+        self.A2 = self.A2[:2]
+        # input()
 
-                cont = 2
-                while cont < len(self.figura[key]):
-                    self.figura[self.figura[key][cont]]
-                    print(self.figura[self.figura[key][cont]])
-                    print(self.figura[key][1])
-                    print(self.figura[self.figura[key][cont]][1])
-                    # print(f'x0: {x0}, y0:{y1}, x1:{x1}, y1:{y1}')
-                    # canvas.create_line(x0, y0, x1, y1, fill='white')
-                    cont+=1
-                    print(cont)
-                    input()
-        
-        # canvas.create_line(A2[0], A2[1], P2, fill='white')
+        self.B2 = np.dot(np.array(self.B), Mc)
+        self.B2 = self.B2[:1]
+        self.C2 = np.dot(np.array(self.C), Mc)
+        self.C2 = self.C2[:1]
+        self.D2 = np.dot(np.array(self.D), Mc)
+        self.D2 = self.D2[:1]
+        self.E2 = np.dot(np.array(self.E), Mc)
+        self.E2 = self.E2[:1]
+        self.F2 = np.dot(np.array(self.F), Mc)
+        self.F2 = self.F2[:1]
+        self.G2 = np.dot(np.array(self.G), Mc)
+        self.G2 = self.G2[:1]
+        self.H2 = np.dot(np.array(self.H), Mc)
+        self.H2 = self.H2[:1]
+        self.I2 = np.dot(np.array(self.I), Mc)
+        self.I2 = self.I2[:1]
+        self.J2 = np.dot(np.array(self.J), Mc)
+        self.J2 = self.J2[:1]
+        print(f'A2: {self.A2}')
+
+
+        # self.figura = {'A':[self.A, self.A2, 'B', 'E', 'F'], 'B':[self.B, self.B2, 'C', 'D', 'G'],
+        # 'C':[self.C, self.C2, 'D', 'H'],'D':[self.D, self.D2, 'E', 'I'], 'E':[self.E, self.E2, 'J'], 
+        # 'F':[self.F, self.F2, 'G', 'J'],'G':[self.G, self.G2, 'H', 'I'], 'H':[self.H, self.H2, 'I'],
+        # 'I':[self.I, self.I2, 'J'],'J':[self.J, self.J2]}
+
+        # canvas.create_line(self.A2[0], self.A2[1], self.B2[0], self.B2[1], fill='white')
+        # canvas.create_line(self.A2[0], self.A2[1], self.E2[0], self.E2[1], fill='white')
+        # canvas.create_line(self.A2[0], self.A2[1], self.F2[0], self.F2[1], fill='white')
+        # canvas.create_line(self.A2[0], self.A2[1], self.B2[0], self.B2[1], fill='white')        
+        # canvas.create_line(self.A2[0], self.A2[1], self.B2[0], self.B2[1], fill='white')
+        # canvas.create_line(self.A2[0], self.A2[1], self.B2[0], self.B2[1], fill='white')
+        # canvas.create_line(self.A2[0], self.A2[1], self.B2[0], self.B2[1], fill='white')
+        # canvas.create_line(self.A2[0], self.A2[1], self.B2[0], self.B2[1], fill='white')
+        # canvas.create_line(self.A2[0], self.A2[1], self.B2[0], self.B2[1], fill='white')
+        # canvas.create_line(self.A2[0], self.A2[1], self.B2[0], self.B2[1], fill='white')
+        # canvas.create_line(self.A2[0], self.A2[1], self.B2[0], self.B2[1], fill='white')
 
         
 
@@ -238,6 +239,15 @@ class CG:
 
     
 def main():
+    # root = Tk()
+    canvas = Canvas(None, bg = '#000000')
     a = CG()
     a.cavaleira()
+
+    # root.pack()
+    # root.mainloop()
+    # Mc = np.array([ [1, 0, 0, 0], [0, 1, 0, 0], 
+    #     [ ((2)**(1/2))/2, ((2)**(1/2))/2, 0, 0], [0, 0, 0, 1] ]) 
+    
+
 main()
