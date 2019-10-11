@@ -96,7 +96,7 @@ class CG:
                     # octeto 2
                     x = x0
                     for y in range(y0, y1):
-                        canvas.create_line(x, y, x+1, y+1, fill='white')
+                        canvas.create_line(x, y, x+1, y+1, fill='#000000')
                         if 0 < d:
                             d -= dx
                         else:
@@ -107,7 +107,7 @@ class CG:
                     # octeto 3
                     x = x0
                     for y in range(y0, y1+1):
-                        canvas.create_line(x, y, x+1, y+1, fill='white')
+                        canvas.create_line(x, y, x+1, y+1, fill='#000000')
                         if 0 < d:
                             d -= dx
                         else:
