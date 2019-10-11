@@ -6,32 +6,35 @@ import math
 class CG:
 
     def __init__(self):
-        self.A = (100, 100, 100, 1)
-        self.B = (100, 100, 250, 1)
-        self.C = (150, 100, 320, 1)
-        self.D = (200, 100, 250, 1)
-        self.E = (200, 100, 100, 1)
-        self.F = (100, 200, 100, 1)
-        self.G = (100, 200, 250, 1)
-        self.H = (150, 200, 320, 1)
-        self.I = (200, 200, 250, 1)
-        self.J = (200, 200, 100, 1)
+        self.A = [100, 100, 100, 1]
+        self.B = [100, 100, 250, 1]
+        self.C = [150, 100, 320, 1]
+        self.D = [200, 100, 250, 1]
+        self.E = [200, 100, 100, 1]
+        self.F = [100, 200, 100, 1]
+        self.G = [100, 200, 250, 1]
+        self.H = [150, 200, 320, 1]
+        self.I = [200, 200, 250, 1]
+        self.J = [200, 200, 100, 1]
 
-        self.A2 = (0, 0, 0)
-        self.B2 = (0, 0, 0)
-        self.C2 = (0, 0, 0)
-        self.D2 = (0, 0, 0)
-        self.E2 = (0, 0, 0)
-        self.F2 = (0, 0, 0)
-        self.G2 = (0, 0, 0)
-        self.H2 = (0, 0, 0)
-        self.I2 = (0, 0, 0)
-        self.J2 = (0, 0, 0)
+        self.A2 = [0, 0, 0]
+        self.B2 = [0, 0, 0]
+        self.C2 = [0, 0, 0]
+        self.D2 = [0, 0, 0]
+        self.E2 = [0, 0, 0]
+        self.F2 = [0, 0, 0]
+        self.G2 = [0, 0, 0]
+        self.H2 = [0, 0, 0]
+        self.I2 = [0, 0, 0]
+        self.J2 = [0, 0, 0]
 
-        self.figura = {'A': [self.A, self.A2, 'B', 'E', 'F'], 'B': [self.B, self.B2, 'C', 'D', 'G'],
-                       'C': [self.C, self.C2, 'D', 'H'], 'D': [self.D, self.D2, 'E', 'I'], 'E': [self.E, self.E2, 'J'],
-                       'F': [self.F, self.F2, 'G', 'J'], 'G': [self.G, self.G2, 'H', 'I'], 'H': [self.H, self.H2, 'I'],
-                       'I': [self.I, self.I2, 'J'], 'J': [self.J, self.J2]}
+        self.projecao = None
+        self.plano = None
+
+        #self.figura = {'A': [self.A, self.A2, 'B', 'E', 'F'], 'B': [self.B, self.B2, 'C', 'D', 'G'],
+        #               'C': [self.C, self.C2, 'D', 'H'], 'D': [self.D, self.D2, 'E', 'I'], 'E': [self.E, self.E2, 'J'],
+        #               'F': [self.F, self.F2, 'G', 'J'], 'G': [self.G, self.G2, 'H', 'I'], 'H': [self.H, self.H2, 'I'],
+        #               'I': [self.I, self.I2, 'J'], 'J': [self.J, self.J2]}
 
     @classmethod
     def line_breasenham(cls, x0, y0, x1, y1, canvas):
@@ -173,11 +176,54 @@ class CG:
     def scale_3D(cls, type='local'):
         pass
 
-    @classmethod
-    def translation_3D(cls, ponto):
-        pass
+    @staticmethod
+    def projecao(self, canvas):
+        if self.projecao == 'cav':
+            self.cavaleira(canvas)
+        elif self.projecao == 'ort':
+            self.ortogonal(canvas, self.plano)
+        else:
+            self.cabinet(canvas)
+
+    def translacao_3D(self, eixo, deslocamento, canvas):
+        if eixo == 'x':
+            self.A[0] = self.A[0] + deslocamento
+            self.B[0] = self.B[0] + deslocamento
+            self.C[0] = self.C[0] + deslocamento
+            self.D[0] = self.D[0] + deslocamento
+            self.E[0] = self.E[0] + deslocamento
+            self.F[0] = self.F[0] + deslocamento
+            self.G[0] = self.G[0] + deslocamento
+            self.H[0] = self.H[0] + deslocamento
+            self.I[0] = self.I[0] + deslocamento
+            self.J[0] = self.J[0] + deslocamento
+        elif eixo == 'y':
+            self.A[1] = self.A[1] + deslocamento
+            self.B[1] = self.B[1] + deslocamento
+            self.C[1] = self.C[1] + deslocamento
+            self.D[1] = self.D[1] + deslocamento
+            self.E[1] = self.E[1] + deslocamento
+            self.F[1] = self.F[1] + deslocamento
+            self.G[1] = self.G[1] + deslocamento
+            self.H[1] = self.H[1] + deslocamento
+            self.I[1] = self.I[1] + deslocamento
+            self.J[1] = self.J[1] + deslocamento
+        else:
+            self.A[2] = self.A[2] + deslocamento
+            self.B[2] = self.B[2] + deslocamento
+            self.C[2] = self.C[2] + deslocamento
+            self.D[2] = self.D[2] + deslocamento
+            self.E[2] = self.E[2] + deslocamento
+            self.F[2] = self.F[2] + deslocamento
+            self.G[2] = self.G[2] + deslocamento
+            self.H[2] = self.H[2] + deslocamento
+            self.I[2] = self.I[2] + deslocamento
+            self.J[2] = self.J[2] + deslocamento
+        
+        CG.projecao(self,canvas)
 
     def cavaleira(self, canvas):
+        self.projecao = 'cav'
         Mc = np.array([[1, 0, 0, 0],
                        [0, 1, 0, 0],
                        [((2)**(1/2))/2, ((2)**(1/2))/2, 0, 0],
@@ -231,6 +277,8 @@ class CG:
             self.J2[coord1]), int(self.J2[coord2]), fill='black')
 
     def ortogonal(self, canvas, plano):
+        self.plano = plano
+        self.projecao = 'ort'
         if plano == 'z':
             Mc = np.array([[1, 0, 0, 0],
                            [0, 1, 0, 0],
@@ -254,7 +302,7 @@ class CG:
                            [0, 0, 0, 1]])
             coord1 = 1
             coord2 = 2
-            print("X")
+            print("x")
 
         self.A2 = np.dot(np.array(self.A), Mc)
         self.B2 = np.dot(np.array(self.B), Mc)
@@ -303,6 +351,7 @@ class CG:
             self.J2[coord1]), int(self.J2[coord2]), fill='black')
 
     def cabinet(self, canvas):
+        self.projecao = 'cab'
         Mc = np.array([[1, 0, 0, 0],
                        [0, 1, 0, 0],
                        [(math.cos(63.4))/2, (math.sin(63.4))/2, 0, 0],
@@ -372,9 +421,12 @@ def main():
     canvas = Canvas(root, width=2000, height=2000, background='#ffffff')
     canvas.grid(row=0, column=0)
     a = CG()
-    # a.cavaleira(canvas)
-    # a.cabinet(canvas)
-    a.ortogonal(canvas, 'a')
+    #a.cavaleira(canvas)
+    #a.translacao_3D('x', 300, canvas)
+    #a.cabinet(canvas)
+    #a.translacao_3D('y', 300, canvas)
+    #a.ortogonal(canvas, 'y')
+    #a.translacao_3D('x', 200, canvas)
     root.mainloop()
 
 
