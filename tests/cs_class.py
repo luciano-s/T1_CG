@@ -2,18 +2,23 @@ from tkinter import *
 
 class CS(object):
     
-    def __init_(self,):
+    def __init__(self, canvas):
         self.INSIDE = 0  # 0000
         self.LEFT   = 1  # 0001
         self.RIGHT  = 2  # 0010
         self.BOTTOM = 4  # 0100
         self.TOP    = 8  # 1000
-        self.x_max = None
-        self.y_max = None
-        self.self.x_min = None
-        self.y_min = None
-        self.retangulo = None
-        self.canvas = None
+        self.xj_max = None
+        self.yj_max = None
+        self.xj_min = None
+        self.yj_min = None
+        self.x_max  = None
+        self.y_max  = None
+        self.x_min  = None
+        self.y_min  = None
+
+        self.retangulo = False
+        self.canvas = canvas
 
     def set_canvas(self, cv):
         self.canvas = cv
@@ -22,25 +27,21 @@ class CS(object):
         self.retangulo = ret
     
 
-
-    def cohenSutherlandClip(self, retangulo ,canvas):
-        x1 = x_min
-        x2 = x_max
-        y1 = y_min
-        y2 = y_max
-        if not retangulo:
-            
-            self.x_max = max(x2,x1)
-            self.y_max = max(y2,y1)
-            self.x_min = min(x1,x2)
-            self.y_min = min(y1,y2)
+    def cohenSutherlandClip(self):
+        x1 = self.x_min
+        x2 = self.x_max
+        y1 = self.y_min
+        y2 = self.y_max
+        
+        if not self.retangulo:
+            self.retangulo = True
 
         # Compute region codes for P1, P2
         else:
             print(f'coordenadas da janela: {self.x_min, self.y_min, self.x_max, self.y_max}')
             
-            code1 = computeCode(x1, y1)
-            code2 = computeCode(x2, y2)
+            code1 = self.computeCode(x1, y1)
+            code2 = self.computeCode(x2, y2)
             accept = False
 
             while True:
@@ -76,29 +77,29 @@ class CS(object):
 
                         # point is above the clip rectangle
                         x = x1 + (x2 - x1) * \
-                            (y_max - y1) / (y2 - y1)
-                        y = y_max
+                            (self.yj_max - y1) / (y2 - y1)
+                        y = self.yj_max
 
                     elif code_out & self.BOTTOM:
 
                         # point is below the clip rectangle
                         x = x1 + (x2 - x1) * \
-                            (y_min - y1) / (y2 - y1)
-                        y = y_min
+                            (self.yj_min - y1) / (y2 - y1)
+                        y = self.yj_min
 
                     elif code_out & self.RIGHT:
 
                         # point is to the right of the clip rectangle
                         y = y1 + (y2 - y1) * \
-                            (x_max - x1) / (x2 - x1)
-                        x = x_max
+                            (self.xj_max - x1) / (x2 - x1)
+                        x = self.xj_max
 
                     elif code_out & self.LEFT:
 
                         # point is to the left of the clip rectangle
                         y = y1 + (y2 - y1) * \
-                            (x_min - x1) / (x2 - x1)
-                        x = x_min
+                            (self.xj_min - x1) / (x2 - x1)
+                        x = self.xj_min
 
                     # Now intersection point x,y is found
                     # We replace point outside clipping rectangle
@@ -106,16 +107,16 @@ class CS(object):
                     if code_out == code1:
                         x1 = x
                         y1 = y
-                        code1 = computeCode(x1, y1)
+                        code1 = self.computeCode(x1, y1)
 
                     else:
                         x2 = x
                         y2 = y
-                        code2 = computeCode(x2, y2)
+                        code2 = self.computeCode(x2, y2)
 
             if accept:
                 print("Line accepted from %.2f,%.2f to %.2f,%.2f" % (x1, y1, x2, y2))
-                canvas.create_line(x1, y1, x2, y2, fill='red')
+                self.canvas.create_line(x1, y1, x2, y2, fill='red')
 
                 # Here the user can add code to display the rectangle
                 # along with the accepted (portion of) lines
@@ -128,13 +129,13 @@ class CS(object):
         
         code = self.INSIDE
     
-        if x < self.x_min:	 # to the left of rectangle
+        if x < self.xj_min:	 # to the left of rectangle
             code |= self.LEFT
-        elif x > self.x_max:  # to the right of rectangle
+        elif x > self.xj_max:  # to the right of rectangle
             code |= self.RIGHT
-        if y < self.y_min:	 # below the rectangle
+        if y < self.yj_min:	 # below the rectangle
             code |= self.BOTTOM
-        elif y > self.y_max:  # above the rectangle
+        elif y > self.yj_max:  # above the rectangle
             code |= self.TOP
 
         return code
@@ -149,22 +150,38 @@ class CS(object):
         print("Mouse position: (%s %s)" % (event.x, event.y))
         self.x_max = event.x
         self.y_max = event.y
-        if not self.retangulo:
+        if self.retangulo == False:
             if self.x_max < self.x_min:
-                self.x_max=self.x_min
+                self.xj_min= self.x_max
+                self.xj_max=self.x_min
+            else:
+                self.xj_min = self.x_min
+                self.xj_max = self.x_max
+
 
             if self.y_max < self.y_min:
-                self.y_max=self.y_min
+                self.yj_max=self.y_min
+                self.yj_min=self.y_max
+            else:
+                self.yj_max = self.y_max
+                self.yj_min = self.y_min
+
             self.retangulo = True
-        
-        self.cohenSutherlandClip(self.retangulo, self.canvas)
+            print(f'xj_min: {self.x_min}yj_min: {self.y_min}xj_max: {self.x_max}yj_max: {self.y_max}')
+            print(f'xj_min: {self.xj_min}yj_min: {self.yj_min}xj_max: {self.xj_max}yj_max: {self.yj_max}')
+            self.canvas.create_rectangle(self.xj_min, self.yj_min,
+            self.xj_max, self.yj_max , outline='#000000')
+        else:
+            self.cohenSutherlandClip()
 
 
 def main():
     root = Tk()
     canvas = Canvas(root, width=2000, height=2000, background = '#ffffff')
     canvas.grid(row=0, column=0)
-    a = CS()
+    a = CS(canvas)
+    
+    
     a.set_canvas(canvas)
     canvas.bind("<Button-1>", a.mouse_click)
     canvas.bind("<ButtonRelease-1>", a.mouse_release)

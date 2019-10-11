@@ -167,11 +167,7 @@ class CG:
                 d+=4*(x) + 6
             CG.draw_circle(xc, yc, x, y, canvas)
             print(f'xc: {xc}, yc: {yc}, x: {x}, y: {y}, r: {r}, d: {d}')
-                y -= 1
-                d += 4*(x-y) + 10
-            else:
-                d += 4*(x-y) + 6
-            draw_circle(xc, yc, x, y, canvas)
+            
 
     @classmethod
     def scale_3D(cls, type='local'):
