@@ -1,5 +1,6 @@
 from algorithms.cg import CG
 import tkinter as tk
+from math import floor
 
 
 class App():
@@ -37,6 +38,8 @@ class App():
         self.menu.add_cascade(label='Cohen-Sutherland', menu=self.cs)
 
 
+# ----------INIÍCIO MÉTODOS DE MONITORAMENTO DE EVENTOS DE MOUSE-------------- #
+
     def mouse_click_line(self, event):
        
         print("Mouse position: (%s %s)" % (event.x, event.y))
@@ -63,43 +66,65 @@ class App():
         print("Mouse position: (%s %s)" % (event.x, event.y))
         self.x2 = event.x
         self.y2 = event.y
-        r = ((self.x2-self.x1)**2 + (self.y2-self.y1)**2)**(1/2)
+        
+        # input()
+        r = floor(((self.x2-self.x1)**2 + (self.y2-self.y1)**2)**(1/2))
         CG.circunferencia(self.x1, self.y1, r, self.canvas)
+
+
+    def mouse_click_cs(self):
+        pass
+
+
+    def mouse_release_cs(self):
+        pass
+# ----------FIM MÉTODOS DE MONITORAMENTO DE EVENTOS DE MOUSE-------------- #
+
+
+# ----------INÍCIO MÉTODOS DE CHAMADA DOS MÉTODOS DA CLASSE CG-------------- #
 
 
     def call_draw_line(self):
         if self.canvas:
             self.canvas.delete('all')
+            self.canvas = None
         self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#000000")
         self.canvas.grid(row=0, column=0)
         self.canvas.bind("<Button-1>", self.mouse_click_line)
         self.canvas.bind("<ButtonRelease-1>", self.mouse_release_line)
-        self.canvas.pack()
         
 
- 
     def call_draw_circ(self):
         if self.canvas:
             self.canvas.delete('all')
+            self.canvas = None
         
         self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#000000")
         self.canvas.grid(row=0, column=0)
         self.canvas.bind("<Button-1>", self.mouse_click_circ)
         self.canvas.bind("<ButtonRelease-1>", self.mouse_release_circ)
-        self.canvas.pack()
+        
     
-    
+    def cohen_sutherland(self):
+        if self.canvas:
+            self.canvas.delete('all')
+            self.canvas = None
+        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#000000")
+        self.canvas.grid(row=0, column=0)
+        self.canvas.bind("<Button-1>", self.mouse_click_cs)
+        self.canvas.bind("<ButtonRelease-1>", self.mouse_cs)
 
     def call_draw_house(self):
         if self.canvas:
             self.canvas.delete('all')
-        
+            self.canvas = None
         self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#000000")
         self.canvas.grid(row=0, column=0)
         self.canvas.bind("<Button-1>", self.mouse_click_house)
         self.canvas.bind("<ButtonRelease-1>", self.mouse_release_house)
-        self.canvas.pack()
-
+        
+        
+# ----------FIM MÉTODOS DE CHAMADA DOS MÉTODOS DA CLASSE CG-------------- #
 
 def main():
     

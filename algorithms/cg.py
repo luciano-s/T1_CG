@@ -154,18 +154,22 @@ class CG:
 
     @classmethod
     def circunferencia(cls, xc, yc, r, canvas):
+        print('entrou circunferencia')
         x = 0
         y = r
         d = 3 - 2*r
-        draw_circle(xc, yc, x, y, canvas)
+        CG.draw_circle(xc, yc, x, y, canvas)
+        print(f'xc: {xc}, yc: {yc}, x: {x}, y: {y}, r: {r}, d: {d}')
         while y >= x:
             x +=1
             if d > 0:
+                print(y)
                 y -=1
                 d += 4*(x-y) + 10
             else:
-                d+=4*(x-y) + 6
-            draw_circle(xc, yc, x, y, canvas)
+                d+=4*(x) + 6
+            CG.draw_circle(xc, yc, x, y, canvas)
+            print(f'xc: {xc}, yc: {yc}, x: {x}, y: {y}, r: {r}, d: {d}')
 
     @classmethod    
     def scale_3D(cls, type='local'):

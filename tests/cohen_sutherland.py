@@ -7,20 +7,20 @@ from tkinter import *
 class Callbacks():
     
     def __init__(self):
-        self.x1=0
-        self.y1=0
-        self.x2=0
-        self.y2=0
+        self.x1 = 0
+        self.y1 = 0
+        self.x2 = 0
+        self.y2 = 0
         self.coord_retangulo = []
         self.coord_linha = []
-        self.retangulo =False
+        self.retangulo = False
         self.root = Tk()
         self.canvas = Canvas(self.root, width=2000, height=2000, background='#000000')
         self.canvas.grid(row=0, column=0)
         self.canvas.bind("<Button-1>", self.mouse_click)
         self.canvas.bind("<ButtonRelease-1>", self.mouse_release)
         self.canvas.pack()
-        self.root.title('Bresenham Círculo')
+        self.root.title('Cohen-Sutherland')
         self.root.mainloop()
         
 
@@ -35,6 +35,7 @@ class Callbacks():
         print("Mouse position: (%s %s)" % (event.x, event.y))
         self.x2 = event.x
         self.y2 = event.y
+        
         if self.retangulo == False:
             print('entrou')
             self.canvas.create_rectangle(
@@ -44,6 +45,7 @@ class Callbacks():
             cohenSutherlandClip(self.x1, self.y1,self.x2, self.y2, self.retangulo,
             self.canvas)
             self.retangulo = True
+
         else:
             cohenSutherlandClip(self.x1, self.y1,self.x2, self.y2, self.retangulo,
             self.canvas)
