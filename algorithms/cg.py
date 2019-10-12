@@ -177,7 +177,7 @@ class CG:
         pass
 
     @staticmethod
-    def projecao(self, canvas):
+    def call_projecao(self, canvas):
         if self.projecao == 'cav':
             self.cavaleira(canvas)
         elif self.projecao == 'ort':
@@ -220,7 +220,7 @@ class CG:
             self.I[2] = self.I[2] + deslocamento
             self.J[2] = self.J[2] + deslocamento
         if projetar :
-            CG.projecao(self,canvas)
+            CG.call_projecao(self,canvas)
 
     def escala_3D(self, eixo, fator, canvas):
         if eixo == 'x':
@@ -257,7 +257,7 @@ class CG:
             self.I[2] = self.I[2] * fator
             self.J[2] = self.J[2] * fator
         
-        CG.projecao(self,canvas)
+        CG.call_projecao(self, canvas)
 
     def rotacao_3D(self, canvas, plano, graus):
         x_medio = (self.A[0]+self.B[0]+self.C[0]+self.D[0]+self.E[0]+self.F[0]+self.G[0]+self.H[0]+self.I[0]+self.J[0])/10 
@@ -302,7 +302,7 @@ class CG:
         self.translacao_3D('y', y_medio, canvas, False)
         self.translacao_3D('z', z_medio, canvas, False)
 
-        CG.projecao(self,canvas)
+        CG.call_projecao(self,canvas)
 
     def cavaleira(self, canvas):
         self.projecao = 'cav'
@@ -513,4 +513,4 @@ def main():
     root.mainloop()
 
 
-main()
+# main()
