@@ -47,6 +47,7 @@ class App():
         # self.dialog_master_rotacao = tk.Toplevel(self.master)
         self.dialog_master         = None
         self.dialog_master_rotacao = None
+        
 
     
 # ----------INIÍCIO MÉTODOS DE MONITORAMENTO DE EVENTOS DE MOUSE-------------- #
@@ -507,10 +508,6 @@ class App():
         print(fator)
         self.casa.escala_3D_global(self.canvas, fator)
         
-        
-
-
-
         
 # ----------FIM MÉTODOS DE CHAMADA DOS MÉTODOS DA CLASSE CG-------------- #
 
