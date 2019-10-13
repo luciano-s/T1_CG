@@ -347,6 +347,7 @@ class CG:
 
         CG.call_projecao(self, canvas)
 
+
     def cavaleira(self, canvas):
         self.projecao = 'cav'
         Mc = np.array([[1, 0, 0, 0],
@@ -400,6 +401,7 @@ class CG:
             self.I2[coord1]), int(self.I2[coord2]), fill='black')
         canvas.create_line(int(self.I2[coord1]), int(self.I2[coord2]), int(
             self.J2[coord1]), int(self.J2[coord2]), fill='black')
+
 
     def ortogonal(self, canvas, plano):
         self.plano = plano
@@ -475,6 +477,7 @@ class CG:
         canvas.create_line(int(self.I2[coord1]), int(self.I2[coord2]), int(
             self.J2[coord1]), int(self.J2[coord2]), fill='black')
 
+
     def cabinet(self, canvas):
         self.projecao = 'cab'
         Mc = np.array([[1, 0, 0, 0],
@@ -531,10 +534,24 @@ class CG:
             self.J2[coord1]), int(self.J2[coord2]), fill='black')
 
 
-    @classmethod
-    def shearing_3D(cls):
-        pass
+    def shearing_3D(self, canvas, shx=0, shy=0, shz=0):
+        Msh = np.array([[1, float(shx), float(shx), 0],
+                        [float(shy), 1, float(shy), 0],
+                        [float(shz), float(shy), 1, 0],
+                        [  0,   0, 0, 1]])
+        
+        self.A = np.dot(np.array(self.A), Msh)
+        self.B = np.dot(np.array(self.B), Msh)
+        self.C = np.dot(np.array(self.C), Msh)
+        self.D = np.dot(np.array(self.D), Msh)
+        self.E = np.dot(np.array(self.E), Msh)
+        self.F = np.dot(np.array(self.F), Msh)
+        self.G = np.dot(np.array(self.G), Msh)
+        self.H = np.dot(np.array(self.H), Msh)
+        self.I = np.dot(np.array(self.I), Msh)
+        self.J = np.dot(np.array(self.J), Msh)
 
+        CG.call_projecao(self, canvas)
 
 
 def main():

@@ -30,7 +30,7 @@ class App():
         self.house.add_command(label='Escala Global', command=self.dialog_escala_global)
         self.house.add_command(label='Translação', command=self.dialog_translacao)
         self.house.add_command(label='Rotação', command=self.dialog_rotacao)
-        self.house.add_command(label='Cisalhamento', command=None)
+        self.house.add_command(label='Cisalhamento', command=self.dialog_shearing)
         self.house.add_command(label='Projeção Cavaleira', command=self.call_cavaleira)
         self.house.add_command(label='Projeção Ortogonal', command=self.dialog_projecao)
         self.house.add_command(label='Projeção Cabinet', command=self.call_cabinet)
@@ -66,6 +66,7 @@ class App():
         self.y2 = event.y
         CG.line_breasenham(self.x1, self.y1, self.x2, self.y2, self.canvas)
 
+
     def mouse_click_circ(self, event):
        
         print("Mouse position: (%s %s)" % (event.x, event.y))
@@ -84,10 +85,10 @@ class App():
         CG.circunferencia(self.x1, self.y1, r, self.canvas)
 
 
-    
 # ----------FIM MÉTODOS DE MONITORAMENTO DE EVENTOS DE MOUSE-------------- #
 
 # ----------INÍCIO MÉTODOS DE DIALOG-------------- #
+
 
     def dialog_get_data(self):
         status_x = self.select_x_axis.get()
@@ -126,6 +127,12 @@ class App():
         elif status_z:
             self.call_translacao(z=True, translacao=
             [distance_translation_z])
+
+
+    def dialog_translacao(self):
+        self.init_dialog_translacao()
+        self.dialog_master.lift()
+        self.dialog_master.mainloop()
 
 
     def init_dialog_translacao(self):
@@ -167,14 +174,6 @@ class App():
          text="Z")
         self.check_z.grid(row=2, column=2 , sticky=W)
         
-
-    def dialog_translacao(self):
-        
-        self.init_dialog_translacao()
-
-        self.dialog_master.lift()
-        self.dialog_master.mainloop()
-    
 
     def dialog_rotacao(self):
         
@@ -291,7 +290,42 @@ class App():
         self.value_escala_global.grid(row=0, column=2)
 
 
+    def dialog_shearing(self):
+        self.init_dialog_shearing()
+        self.dialog_master_shearing.lift()
+        self.dialog_master_shearing.mainloop() 
 
+
+    def init_dialog_shearing(self):
+        self.dialog_master_shearing = tk.Toplevel(self.master)
+        self.dialog_master_shearing.title('Selecionar Plano de Projeção')
+        self.dialog_master_shearing.geometry('350x100+%d+%d'% 
+        (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
+        self.button_set_shearing = Button(self.dialog_master_shearing, text="OK", command=self.call_shearing)
+        self.button_set_shearing.grid(row=10, column=1, sticky=W)
+        tk.Label(self.dialog_master_shearing, text="Shearing x:").grid(row=0, sticky=W)
+        tk.Label(self.dialog_master_shearing, text="Shearing y:").grid(row=1, sticky=W)
+        tk.Label(self.dialog_master_shearing, text="Shearing z:").grid(row=2, sticky=W)
+        self.value_shearing_x = tk.Entry(self.dialog_master_shearing)
+        self.value_shearing_x.grid(row=0, column=1)
+        self.value_shearing_y = tk.Entry(self.dialog_master_shearing)
+        self.value_shearing_y.grid(row=1, column=1)
+        self.value_shearing_z = tk.Entry(self.dialog_master_shearing)
+        self.value_shearing_z.grid(row=2, column=1)
+        self.select_x_shearing = tk.BooleanVar()
+        self.select_y_shearing = tk.BooleanVar()
+        self.select_z_shearing = tk.BooleanVar()
+        self.check_x_shear = tk.Checkbutton(self.dialog_master_shearing, variable=self.select_x_shearing, onvalue=True, offvalue=False,
+         text="X")
+        self.check_x_shear.grid(row=0, column=2 , sticky=W)
+        self.check_y_shear = tk.Checkbutton(self.dialog_master_shearing, variable=self.select_y_shearing, onvalue=True, offvalue=False,
+         text="Y")
+        self.check_y_shear.grid(row=1, column=2 , sticky=W)
+        self.check_z_shear = tk.Checkbutton(self.dialog_master_shearing, variable=self.select_z_shearing, onvalue=True, offvalue=False,
+         text="Z")
+        self.check_z_shear.grid(row=2, column=2 , sticky=W)        
+                
+        
 # ----------FIM MÉTODOS DE DIALOG-------------- #
 
 
@@ -507,7 +541,52 @@ class App():
         fator = self.value_escala_global.get()
         print(fator)
         self.casa.escala_3D_global(self.canvas, fator)
-        
+    
+
+    def call_shearing(self):
+        if self.canvas:
+            self.canvas.delete('all')
+            self.canvas = None
+        if self.casa == None:
+            self.casa = CG()
+        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas.grid(row=0, column=0)
+        print(self.value_shearing_y.get())
+        print(self.value_shearing_z.get())
+
+        if self.select_x_shearing.get() == True:
+            # shearing em x
+            shy = self.value_shearing_y.get()
+            shz = self.value_shearing_z.get()
+            if shy==shz!='':
+                self.casa.shearing_3D(self.canvas, shy=shy, shz=shz)
+            elif shy!='':
+                self.casa.shearing_3D(self.canvas, shy=shy)
+            elif shz!='':
+                self.casa.shearing_3D(self.canvas, shz=shz)
+
+        elif self.select_y_shearing.get() == True:
+            # shearing em y
+            shx = self.value_shearing_x.get()
+            shz = self.value_shearing_y.get()
+            if shz==shx!='':
+                self.casa.shearing_3D(self.canvas, shx=shx, shz=shz)
+            elif shx!='':
+                self.casa.shearing_3D(self.canvas, shx=shx)
+            elif shz!='':
+                self.casa.shearing_3D(self.canvas, shz=shz)
+            
+        elif self.select_z_shearing.get() == True:
+            # shearing em z
+            shy = self.value_shearing_y.get()
+            shx = self.value_shearing_y.get()
+            if shx != '' and shy != '':
+                self.casa.shearing_3D(self.canvas, shx=shx, shy=shy)
+            elif shx == '':
+                self.casa.shearing_3D(self.canvas, shy=shy)
+            elif shy == '':
+                self.casa.shearing_3D(self.canvas, shx=shx)
+
         
 # ----------FIM MÉTODOS DE CHAMADA DOS MÉTODOS DA CLASSE CG-------------- #
 
