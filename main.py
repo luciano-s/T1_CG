@@ -272,7 +272,6 @@ class App():
         variable=self.plano_proj, value=3).grid(row=2, column=3, sticky=W)   
 
     
-    
     def dialog_escala_global(self):
         self.init_dialog_escala_global()
         self.dialog_master_escala_global.lift()
@@ -282,13 +281,14 @@ class App():
     def init_dialog_escala_global(self):
         self.dialog_master_escala_global = tk.Toplevel(self.master)
         self.dialog_master_escala_global.title('Selecionar Fator Escala Global')
-        self.dialog_master_escala_global.geometry('350x100+%d+%d'% 
+        self.dialog_master_escala_global.geometry('200x100+%d+%d'% 
         (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
         self.button_set_escala_global = Button(self.dialog_master_escala_global, text="OK", command=self.call_escala_global)
         self.button_set_escala_global.grid(row=10, column=1, sticky=W)
-        
+        tk.Label(self.dialog_master_escala_global, text="Escala:").grid(row=0, column=0, sticky=W)
+
         self.value_escala_global = tk.Entry(self.dialog_master_escala_global)
-        self.value_escala_global.grid(row=0, column=1)
+        self.value_escala_global.grid(row=0, column=2)
 
 
 
