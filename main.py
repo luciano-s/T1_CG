@@ -32,7 +32,7 @@ class App():
         self.house.add_command(label='Rotação', command=self.dialog_rotacao)
         self.house.add_command(label='Cisalhamento', command=None)
         self.house.add_command(label='Projeção Cavaleira', command=self.call_cavaleira)
-        self.house.add_command(label='Projeção Ortogonal', command=self.call_ortogonal)
+        self.house.add_command(label='Projeção Ortogonal', command=self.dialog_projecao)
         self.house.add_command(label='Projeção Cabinet', command=self.call_cabinet)
 
         self.cs.add_command(label='Nova Janela', command = self.call_cohen_sutherland)
@@ -250,7 +250,29 @@ class App():
         self.y_scale = tk.Radiobutton(self.dialog_master_escala, text='Y',
          variable=self.axis_escala, value=2).grid(row=1, column=3, sticky=W)
         self.z_scale = tk.Radiobutton(self.dialog_master_escala, text='Z',
-         variable=self.axis_escala, value=3).grid(row=2, column=3, sticky=W)        
+         variable=self.axis_escala, value=3).grid(row=2, column=3, sticky=W)    
+
+    def init_dialog_proj_ortogonal(self):    
+        self.dialog_master_ortogonal = tk.Toplevel(self.master)
+        self.dialog_master_ortogonal.title('Selecionar Plano de Projeção')
+        self.dialog_master_ortogonal.geometry('350x100+%d+%d'% 
+        (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
+        self.button_set_ortogonal = Button(self.dialog_master_ortogonal, text="OK", command=self.call_ortogonal)
+        self.button_set_ortogonal.grid(row=10, column=1, sticky=W)
+        self.plano_proj = IntVar()
+        self.plano_xy = tk.Radiobutton(self.dialog_master_ortogonal, text='XY',
+         variable=self.plano_proj, value=1).grid(row=0, column=3, sticky=W)
+        self.plano_yz = tk.Radiobutton(self.dialog_master_ortogonal, text='YZ',
+         variable=self.plano_proj, value=2).grid(row=1, column=3, sticky=W)
+        self.plano_xz = tk.Radiobutton(self.dialog_master_ortogonal, text='XZ',
+        variable=self.plano_proj, value=3).grid(row=2, column=3, sticky=W)   
+
+    def dialog_projecao(self):
+        
+        self.init_dialog_proj_ortogonal()
+
+        self.dialog_master_ortogonal.lift()
+        self.dialog_master_ortogonal.mainloop() 
 # ----------FIM MÉTODOS DE DIALOG-------------- #
 
 
@@ -394,8 +416,13 @@ class App():
             self.canvas = None
         self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
         self.canvas.grid(row=0, column=0)
-
-        self.casa.ortogonal(self.canvas, 'y')
+        self.casa = CG()
+        if self.plano_proj.get() == 1:
+            self.casa.ortogonal(self.canvas, 'z')
+        elif self.plano_proj.get() == 2:
+            self.casa.ortogonal(self.canvas, 'x')
+        elif self.plano_proj.get() == 3:
+                self.casa.ortogonal(self.canvas, 'y')
     
 
     def call_rotacao(self):
@@ -431,11 +458,13 @@ class App():
         self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         axis = self.axis_escala.get()
+
         if axis == 1:
             try:
                 self.casa.escala_3D('x', float(self.value_escala_x.get()), self.canvas)
             except ValueError:
                 messagebox.showerror('Erro', 'O campo selecionado não pode ser vazio')
+
         elif axis == 2:
             try:
                 self.casa.escala_3D('y', float(self.value_escala_y.get()), self.canvas)
@@ -455,6 +484,8 @@ class App():
 
         
 # ----------FIM MÉTODOS DE CHAMADA DOS MÉTODOS DA CLASSE CG-------------- #
+
+
 
 def main():
     
