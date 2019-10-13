@@ -1,5 +1,6 @@
 from algorithms.cg import CG
 import tkinter as tk
+from tkinter import messagebox
 from tests.cs_class import *
 from math import floor
 
@@ -25,13 +26,14 @@ class App():
         self.line.add_command(label='Novo', command=self.call_draw_line)
         self.circ.add_command(label='Novo', command=self.call_draw_circ)
         self.house.add_command(label='Novo', command=self.call_draw_house)
-        self.house.add_command(label='Escala Local', command=None)
+        self.house.add_command(label='Escala Local', command=self.dialog_escala)
         self.house.add_command(label='Escala Global', command=None)
         self.house.add_command(label='Translação', command=self.dialog_translacao)
-        self.house.add_command(label='Rotação', command=None)
+        self.house.add_command(label='Rotação', command=self.dialog_rotacao)
         self.house.add_command(label='Cisalhamento', command=None)
         self.house.add_command(label='Projeção Cavaleira', command=self.call_cavaleira)
-        
+        self.house.add_command(label='Projeção Ortogonal', command=self.call_ortogonal)
+        self.house.add_command(label='Projeção Cabinet', command=self.call_cabinet)
 
         self.cs.add_command(label='Nova Janela', command = self.call_cohen_sutherland)
         
@@ -41,42 +43,14 @@ class App():
         self.menu.add_cascade(label='Casa', menu=self.house)
         self.menu.add_cascade(label='Cohen-Sutherland', menu=self.cs)
 
-        self.dialog_master = tk.Toplevel(self.master)
-        
-        
-        self.dialog_master.geometry('350x100+%d+%d'% 
-        (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
-        self.button_set_translation = Button(self.dialog_master, text="OK", command=self.dialog_get_data)
-        self.button_set_translation.grid(row=10, column=1, sticky=W)
-        
-        tk.Label(self.dialog_master, text="Deslocamento x:").grid(row=0, sticky=W)
-        tk.Label(self.dialog_master, text="Deslocamento y:").grid(row=1, sticky=W)
-        tk.Label(self.dialog_master, text="Deslocamento z:").grid(row=2, sticky=W)
-        
-        
-        self.value_translation_x = tk.Entry(self.dialog_master)
-        self.value_translation_x.grid(row=0, column=1)
-        self.value_translation_y = tk.Entry(self.dialog_master)
-        self.value_translation_y.grid(row=1, column=1)
-        self.value_translation_z = tk.Entry(self.dialog_master)
-        self.value_translation_z.grid(row=2, column=1)
+        # self.dialog_master         = tk.Toplevel(self.master)
+        # self.dialog_master_rotacao = tk.Toplevel(self.master)
+        self.dialog_master         = None
+        self.dialog_master_rotacao = None
 
-        self.select_x_axis = tk.BooleanVar()
-        self.select_y_axis = tk.BooleanVar()
-        self.select_z_axis = tk.BooleanVar()
         
-        self.check_x = tk.Checkbutton(self.dialog_master, variable=self.select_x_axis, onvalue=True, offvalue=False,
-         text="X")
-        self.check_x.grid(row=0, column=2 , sticky=W)
         
-        self.check_y = tk.Checkbutton(self.dialog_master, variable=self.select_y_axis, onvalue=True, offvalue=False,
-         text="Y")
-        self.check_y.grid(row=1, column=2 , sticky=W)
 
-        self.check_z = tk.Checkbutton(self.dialog_master, variable=self.select_z_axis, onvalue=True, offvalue=False,
-         text="Z")
-        self.check_z.grid(row=2, column=2 , sticky=W)
-        
         
         
 
@@ -140,7 +114,7 @@ class App():
 
         elif status_x and status_z:
             # passa os dois
-            self.call_translacao(x=True,z=True
+            self.call_translacao(x=True,z=True,translacao=
             [distance_translation_x, distance_translation_z])
 
         elif status_z and status_y:
@@ -158,18 +132,125 @@ class App():
             self.call_translacao(z=True, translacao=
             [distance_translation_z])
 
+
+    def init_dialog_translacao(self):
+        self.dialog_master = tk.Toplevel(self.master)
+        self.dialog_master.geometry('350x100+%d+%d'% 
+        (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
+        self.button_set_translation = Button(self.dialog_master, text="OK", command=self.dialog_get_data)
+        self.button_set_translation.grid(row=10, column=1, sticky=W)
+        
+        tk.Label(self.dialog_master, text="Deslocamento x:").grid(row=0, sticky=W)
+        tk.Label(self.dialog_master, text="Deslocamento y:").grid(row=1, sticky=W)
+        tk.Label(self.dialog_master, text="Deslocamento z:").grid(row=2, sticky=W)
         
         
+        self.value_translation_x = tk.Entry(self.dialog_master)
+        self.value_translation_x.grid(row=0, column=1)
+        self.value_translation_y = tk.Entry(self.dialog_master)
+        self.value_translation_y.grid(row=1, column=1)
+        self.value_translation_z = tk.Entry(self.dialog_master)
+        self.value_translation_z.grid(row=2, column=1)
+
+        self.select_x_axis = tk.BooleanVar()
+        self.select_y_axis = tk.BooleanVar()
+        self.select_z_axis = tk.BooleanVar()
+        
+        self.check_x = tk.Checkbutton(self.dialog_master, variable=self.select_x_axis, onvalue=True, offvalue=False,
+         text="X")
+        self.check_x.grid(row=0, column=2 , sticky=W)
+        
+        self.check_y = tk.Checkbutton(self.dialog_master, variable=self.select_y_axis, onvalue=True, offvalue=False,
+         text="Y")
+        self.check_y.grid(row=1, column=2 , sticky=W)
+
+        self.check_z = tk.Checkbutton(self.dialog_master, variable=self.select_z_axis, onvalue=True, offvalue=False,
+         text="Z")
+        self.check_z.grid(row=2, column=2 , sticky=W)
         
 
-        
     def dialog_translacao(self):
+        
+        self.init_dialog_translacao()
+
         self.dialog_master.lift()
         self.dialog_master.mainloop()
+    
+
+    def dialog_rotacao(self):
+        
+        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas.grid(row=0, column=0)
+        self.init_dialog_rotacao()
+        self.dialog_master_rotacao.lift()
+        self.dialog_master_rotacao.mainloop()
+
+
+    def init_dialog_rotacao(self):
+        self.dialog_master_rotacao = tk.Toplevel(self.master)
+        self.dialog_master_rotacao.geometry('350x100+%d+%d'% 
+        (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
+        self.button_set_rotation = Button(self.dialog_master_rotacao, text="OK", command=self.call_rotacao)
+        self.button_set_rotation.grid(row=10, column=1, sticky=W)
+
+        tk.Label(self.dialog_master_rotacao, text="Rotação x:").grid(row=0, sticky=W)
+        tk.Label(self.dialog_master_rotacao, text="Rotação y:").grid(row=1, sticky=W)
+        tk.Label(self.dialog_master_rotacao, text="Rotação z:").grid(row=2, sticky=W)
+        self.value_rotation_x = tk.Entry(self.dialog_master_rotacao)
+        self.value_rotation_x.grid(row=0, column=1)
+        self.value_rotation_y = tk.Entry(self.dialog_master_rotacao)
+        self.value_rotation_y.grid(row=1, column=1)
+        self.value_rotation_z = tk.Entry(self.dialog_master_rotacao)
+        self.value_rotation_z.grid(row=2, column=1)
+        self.axis_rotation = IntVar()
+        
+        
+        self.x_rot = tk.Radiobutton(self.dialog_master_rotacao, text='X',
+         variable=self.axis_rotation, value=1).grid(row=0, column=3, sticky=W)
+        self.y_rot = tk.Radiobutton(self.dialog_master_rotacao, text='Y',
+         variable=self.axis_rotation, value=2).grid(row=1, column=3, sticky=W)
+        self.z_rot = tk.Radiobutton(self.dialog_master_rotacao, text='Z',
+         variable=self.axis_rotation, value=3).grid(row=2, column=3, sticky=W)
+        # print('finished ')
+
+
+    def dialog_escala(self):
         
 
+        
+        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas.grid(row=0, column=0)
+        self.init_dialog_translacao()
+
+        self.dialog_master.lift()
+        self.dialog_master.mainloop()
 
 
+    def init_dialog_escala(self):
+        self.dialog_master_escala = tk.Toplevel(self.master)
+        self.dialog_master_escala.geometry('350x100+%d+%d'% 
+        (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
+        self.button_set_escala = Button(self.dialog_master_rotacao, text="OK", command=self.call_escala)
+        self.button_set_escala.grid(row=10, column=1, sticky=W)
+
+        tk.Label(self.dialog_master_escala, text="Escala x:").grid(row=0, sticky=W)
+        tk.Label(self.dialog_master_escala, text="Escala y:").grid(row=1, sticky=W)
+        tk.Label(self.dialog_master_escala, text="Escala z:").grid(row=2, sticky=W)
+        self.value_escala_x = tk.Entry(self.dialog_master_escala)
+        self.value_escala_.grid(row=0, column=1)
+        self.value_escala_y = tk.Entry(self.dialog_master_escala)
+        self.value_escala_y.grid(row=1, column=1)
+        self.value_escala_z = tk.Entry(self.dialog_master_escala)
+        self.value_escala_z.grid(row=2, column=1)
+        self.axis_escala = IntVar()
+        
+        
+        self.x_scale = tk.Radiobutton(self.dialog_master_escala, text='X',
+         variable=self.axis_escala, value=1).grid(row=0, column=3, sticky=W)
+        self.y_scale = tk.Radiobutton(self.dialog_master_escala, text='Y',
+         variable=self.axis_escala, value=2).grid(row=1, column=3, sticky=W)
+        self.z_scale = tk.Radiobutton(self.dialog_master_escala, text='Z',
+         variable=self.axis_escala, value=3).grid(row=2, column=3, sticky=W)        
 # ----------FIM MÉTODOS DE DIALOG-------------- #
 
 
@@ -219,6 +300,7 @@ class App():
         self.canvas.bind("<Button-1>", self.mouse_click_house)
         self.canvas.bind("<ButtonRelease-1>", self.mouse_release_house)
     
+
     def call_cavaleira(self):
         if self.canvas:
             self.canvas.delete('all')
@@ -232,6 +314,19 @@ class App():
         print(self.casa.projecao)
     
 
+    def call_cabinet(self):
+        if self.canvas:
+            self.canvas.delete('all')
+            self.canvas = None
+        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas.grid(row=0, column=0)
+        
+        self.casa.projecao = ''
+        print(self.casa)
+        CG.call_projecao(self.casa, self.canvas)
+        print(self.casa.projecao)
+
+
     def call_translacao(self, x=None,y=None, z=None, translacao=[]):
         if self.canvas:
             self.canvas.delete('all')
@@ -240,40 +335,123 @@ class App():
         self.canvas.grid(row=0, column=0)
         if x==y==z!=None:
             # passa x  y z
-            self.casa.translacao_3D('x', int(translacao[0]), self.canvas, False)
-            self.casa.translacao_3D('y', int(translacao[1]), self.canvas, False)
-            self.casa.translacao_3D('z', int(translacao[2]), self.canvas, True)
+            try:
+                self.casa.translacao_3D('x', int(translacao[0]), self.canvas, False)
+                self.casa.translacao_3D('y', int(translacao[1]), self.canvas, False)
+                self.casa.translacao_3D('z', int(translacao[2]), self.canvas, True)
+            except ValueError:
+                messagebox.showerror("Erro", "Campos selecionados não podem ser vazios!")
             
         elif x==y!=None:
             # passa x e y
-            self.casa.translacao_3D('x', int(translacao[0]), self.canvas, False)
-            self.casa.translacao_3D('y', int(translacao[1]), self.canvas, True)
-            
+            try:
+                self.casa.translacao_3D('x', int(translacao[0]), self.canvas, False)
+                self.casa.translacao_3D('y', int(translacao[1]), self.canvas, True)
+            except ValueError:
+                messagebox.showerror("Erro", "Campos selecionados não podem ser vazios!")
             
         elif x==z!=None:
             # passa x e z
-            self.casa.translacao_3D('x', int(translacao[0]), self.canvas, False)
-            self.casa.translacao_3D('z', int(translacao[1]), self.canvas, True)
-            
+            try:
+                self.casa.translacao_3D('x', int(translacao[0]), self.canvas, False)
+                self.casa.translacao_3D('z', int(translacao[1]), self.canvas, True)
+            except ValueError:
+                messagebox.showerror("Erro", "Campos selecionados não podem ser vazios!")
         elif y==z!=None:
             # passa y e z
-            self.casa.translacao_3D('y', int(translacao[0]), self.canvas, False)
-            self.casa.translacao_3D('z', int(translacao[1]), self.canvas, True)
-            pass
+            try:
+                self.casa.translacao_3D('y', int(translacao[0]), self.canvas, False)
+                self.casa.translacao_3D('z', int(translacao[1]), self.canvas, True)
+            except:
+                messagebox.showerror("Erro", "Campos selecionados não podem ser vazios!")
+
+            
         elif x!= None:
             # passa x
-            self.casa.translacao_3D('x', int(translacao[0]), self.canvas, True)
+            try:
+                self.casa.translacao_3D('x', int(translacao[0]), self.canvas, True)
+            except:
+                messagebox.showerror("Erro", "Campos selecionados não podem ser vazios!")
 
         elif y!= None:
             # passa y
-            self.casa.translacao_3D('y', int(translacao[0]), self.canvas, True)
-            
+            try:
+                self.casa.translacao_3D('y', int(translacao[0]), self.canvas, True)
+            except:
+                messagebox.showerror("Erro", "Campos selecionados não podem ser vazios!")
+
         elif z!= None:
             # passa z
-            self.casa.translacao_3D('z', int(translacao[0]), self.canvas, True)
-            
+            try:
+                self.casa.translacao_3D('z', int(translacao[0]), self.canvas, True)
+            except:
+                messagebox.showerror("Erro", "Campos selecionados não podem ser vazios!")
+
+
+    def call_ortogonal(self):
+        if self.canvas:
+            self.canvas.delete('all')
+            self.canvas = None
+        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas.grid(row=0, column=0)
+
+        self.casa.ortogonal(self.canvas, 'y')
+    
+
+    def call_rotacao(self):
+        if self.canvas:
+            self.canvas.delete('all')
+            self.canvas = None
+        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas.grid(row=0, column=0)
+        print('call_rotation')
+        axis = self.axis_rotation.get()
+        print(f'axis: {axis}')
+        if axis == 1:
+            try:
+                self.casa.rotacao_3D(self.canvas, 'x', float(self.value_rotation_x.get()))
+            except ValueError:
+                messagebox.showerror('Erro', 'O campo selecionado não pode ser vazio')
+        elif axis == 2:
+            try:
+                self.casa.rotacao_3D(self.canvas, 'y', float(self.value_rotation_y.get()))
+            except ValueError:
+                messagebox.showerror('Erro', 'O campo selecionado não pode ser vazio')
+        elif axis == 3:
+            try:
+                self.casa.rotacao_3D(self.canvas, 'z', float(self.value_rotation_z.get()))
+            except ValueError:
+                messagebox.showerror('Erro', 'O campo selecionado não pode ser vazio')
+
+
+    def call_escala(self):
+        # if self.canvas:
+        #     self.canvas.delete('all')
+        #     self.canvas = None
+        # self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        # self.canvas.grid(row=0, column=0)
+        axis = self.axis_escala.get()
+        if axis == 1:
+            try:
+                self.casa.escala_3D('x', float(self.value_escala_x.get()), self.canvas)
+            except:
+                messagebox.showerror('Erro', 'O campo selecionado não pode ser vazio')
+        elif axis == 2:
+            try:
+                self.casa.escala_3D('y', float(self.value_escala_y.get()), self.canvas)
+            except:
+                messagebox.showerror('Erro', 'O campo selecionado não pode ser vazio')
+        elif axis == 3:
+            try:
+                self.casa.escala_3D('z', float(self.value_escala_z.get()), self.canvas)
+            except:
+                messagebox.showerror('Erro', 'O campo selecionado não pode ser vazio')
+        
 
         
+        
+
+
 
         
 # ----------FIM MÉTODOS DE CHAMADA DOS MÉTODOS DA CLASSE CG-------------- #

@@ -269,21 +269,21 @@ class CG:
         self.translacao_3D('z', -z_medio, canvas, False)
 
         if plano == 'z':
-            Mc = np.array([[math.cos(graus), -math.sin(graus), 0, 0],
-                           [math.sin(graus), math.cos(graus), 0, 0],
+            Mc = np.array([[math.cos(math.radians(graus)), -math.sin(math.radians(graus)), 0, 0],
+                           [math.sin(math.radians(graus)), math.cos(math.radians(graus)), 0, 0],
                            [0, 0, 1, 0],
                            [0, 0, 0, 1]])
             print("rotação em z")
         elif plano == 'y':
-            Mc = np.array([[math.cos(graus), 0, -math.sin(graus), 0],
+            Mc = np.array([[math.cos(math.radians(graus)), 0, -math.sin(math.radians(graus)), 0],
                            [0, 1, 0, 0],
-                           [math.sin(graus), 0, math.cos(graus), 0],
+                           [math.sin(math.radians(graus)), 0, math.cos(math.radians(graus)), 0],
                            [0, 0, 0, 1]])
             print("rotação em y")
         else:
             Mc = np.array([[1, 0, 0, 0],
-                           [0, math.cos(graus), -math.sin(graus), 0],
-                           [0, math.sin(graus), math.cos(graus), 0],
+                           [0, math.cos(math.radians(graus)), -math.sin(math.radians(graus)), 0],
+                           [0, math.sin(math.radians(graus)), math.cos(math.radians(graus)), 0],
                            [0, 0, 0, 1]])
             print("rotação em x")
 
@@ -302,7 +302,7 @@ class CG:
         self.translacao_3D('y', y_medio, canvas, False)
         self.translacao_3D('z', z_medio, canvas, False)
 
-        CG.call_projecao(self,canvas)
+        CG.call_projecao(self, canvas)
 
     def cavaleira(self, canvas):
         self.projecao = 'cav'
