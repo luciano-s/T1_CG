@@ -116,7 +116,7 @@ class CS(object):
 
             if accept:
                 print("Line accepted from %.2f,%.2f to %.2f,%.2f" % (x1, y1, x2, y2))
-                self.canvas.create_line(x1, y1, x2, y2, fill='red')
+                self.canvas.create_line(x1, y1, x2, y2, fill='black')
 
                 # Here the user can add code to display the rectangle
                 # along with the accepted (portion of) lines

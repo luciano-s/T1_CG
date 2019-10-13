@@ -259,6 +259,36 @@ class CG:
         
         CG.call_projecao(self, canvas)
 
+    def escala_3D_global(self, canvas, factor):
+        Ms = np.array([[1, 0, 0, 0],
+                       [0, 1, 0, 0],
+                       [0, 0, 1, 0],
+                       [0, 0, 0, factor]])
+        array_factor = np.array([factor, factor, factor, factor])
+
+        self.A2 = np.dot(np.array(self.A), Ms)
+        self.B2 = np.dot(np.array(self.B), Ms)
+        self.C2 = np.dot(np.array(self.C), Ms)
+        self.D2 = np.dot(np.array(self.D), Ms)
+        self.E2 = np.dot(np.array(self.E), Ms)
+        self.F2 = np.dot(np.array(self.F), Ms)
+        self.G2 = np.dot(np.array(self.G), Ms)
+        self.H2 = np.dot(np.array(self.H), Ms)
+        self.I2 = np.dot(np.array(self.I), Ms)
+        self.J2 = np.dot(np.array(self.J), Ms)
+        self.A2 = np.divide(self.A2,array_factor)
+        self.B2 = np.divide(self.B2,array_factor)
+        self.C2 = np.divide(self.C2,array_factor)
+        self.D2 = np.divide(self.D2,array_factor)
+        self.E2 = np.divide(self.E2,array_factor)
+        self.F2 = np.divide(self.F2,array_factor)
+        self.G2 = np.divide(self.G2,array_factor)
+        self.H2 = np.divide(self.H2,array_factor)
+        self.I2 = np.divide(self.I2,array_factor)
+        self.J2 = np.divide(self.J2,array_factor)
+
+        CG.call_projecao(self, canvas)
+
     def rotacao_3D(self, canvas, plano, graus):
         x_medio = (self.A[0]+self.B[0]+self.C[0]+self.D[0]+self.E[0]+self.F[0]+self.G[0]+self.H[0]+self.I[0]+self.J[0])/10 
         y_medio = (self.A[1]+self.B[1]+self.C[1]+self.D[1]+self.E[1]+self.F[1]+self.G[1]+self.H[1]+self.I[1]+self.J[1])/10 
@@ -436,7 +466,7 @@ class CG:
         self.projecao = 'cab'
         Mc = np.array([[1, 0, 0, 0],
                        [0, 1, 0, 0],
-                       [(math.cos(63.4))/2, (math.sin(63.4))/2, 0, 0],
+                       [(math.cos(math.radians(63.4)))/2, (math.sin(math.radians(63.4)))/2, 0, 0],
                        [0, 0, 0, 1]])
         coord1 = 0
         coord2 = 1
@@ -506,10 +536,13 @@ def main():
     #a.translacao_3D('y', 300, canvas, True)
     #a.ortogonal(canvas, 'y')
     #a.translacao_3D('x', 200, canvas, True)
-    a.ortogonal(canvas, 'z')
-    a.translacao_3D('x', 500, canvas, False)
+    # a.ortogonal(canvas, 'z')
+    # a.translacao_3D('x', 500, canvas, False)
     #a.escala_3D('x', 2, canvas)
-    a.rotacao_3D(canvas, 'y', 90)
+    # a.rotacao_3D(canvas, 'y', 90)
+    print(f'called')
+    # a.escala_3D_global(canvas, 100)
+    # a.escala_3D_global(canvas, 0.10)
     root.mainloop()
 
 

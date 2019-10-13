@@ -27,7 +27,7 @@ class App():
         self.circ.add_command(label='Novo', command=self.call_draw_circ)
         self.house.add_command(label='Novo', command=self.call_draw_house)
         self.house.add_command(label='Escala Local', command=self.dialog_escala)
-        self.house.add_command(label='Escala Global', command=None)
+        self.house.add_command(label='Escala Global', command=self.dialog_escala_global)
         self.house.add_command(label='Translação', command=self.dialog_translacao)
         self.house.add_command(label='Rotação', command=self.dialog_rotacao)
         self.house.add_command(label='Cisalhamento', command=None)
@@ -47,12 +47,6 @@ class App():
         # self.dialog_master_rotacao = tk.Toplevel(self.master)
         self.dialog_master         = None
         self.dialog_master_rotacao = None
-
-        
-        
-
-        
-        
 
     
 # ----------INIÍCIO MÉTODOS DE MONITORAMENTO DE EVENTOS DE MOUSE-------------- #
@@ -252,6 +246,15 @@ class App():
         self.z_scale = tk.Radiobutton(self.dialog_master_escala, text='Z',
          variable=self.axis_escala, value=3).grid(row=2, column=3, sticky=W)    
 
+
+    def dialog_projecao(self):
+        
+        self.init_dialog_proj_ortogonal()
+
+        self.dialog_master_ortogonal.lift()
+        self.dialog_master_ortogonal.mainloop() 
+
+
     def init_dialog_proj_ortogonal(self):    
         self.dialog_master_ortogonal = tk.Toplevel(self.master)
         self.dialog_master_ortogonal.title('Selecionar Plano de Projeção')
@@ -267,12 +270,27 @@ class App():
         self.plano_xz = tk.Radiobutton(self.dialog_master_ortogonal, text='XZ',
         variable=self.plano_proj, value=3).grid(row=2, column=3, sticky=W)   
 
-    def dialog_projecao(self):
-        
-        self.init_dialog_proj_ortogonal()
+    
+    
+    def dialog_escala_global(self):
+        self.init_dialog_escala_global()
+        self.dialog_master_escala_global.lift()
+        self.dialog_master_escala_global.mainloop() 
 
-        self.dialog_master_ortogonal.lift()
-        self.dialog_master_ortogonal.mainloop() 
+    
+    def init_dialog_escala_global(self):
+        self.dialog_master_escala_global = tk.Toplevel(self.master)
+        self.dialog_master_escala_global.title('Selecionar Fator Escala Global')
+        self.dialog_master_escala_global.geometry('350x100+%d+%d'% 
+        (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
+        self.button_set_escala_global = Button(self.dialog_master_escala_global, text="OK", command=self.call_escala_global)
+        self.button_set_escala_global.grid(row=10, column=1, sticky=W)
+        
+        self.value_escala_global = tk.Entry(self.dialog_master_escala_global)
+        self.value_escala_global.grid(row=0, column=1)
+
+
+
 # ----------FIM MÉTODOS DE DIALOG-------------- #
 
 
@@ -418,7 +436,7 @@ class App():
         self.canvas.grid(row=0, column=0)
         self.casa = CG()
         if self.plano_proj.get() == 1:
-            self.casa.ortogonal(self.canvas, 'z')
+            self.casa.ortogonal(self.canvas, 'z')   
         elif self.plano_proj.get() == 2:
             self.casa.ortogonal(self.canvas, 'x')
         elif self.plano_proj.get() == 3:
@@ -475,8 +493,19 @@ class App():
                 self.casa.escala_3D('z', float(self.value_escala_z.get()), self.canvas)
             except ValueError:
                 messagebox.showerror('Erro', 'O campo selecionado não pode ser vazio')
-        
 
+
+    def call_escala_global(self):
+        if self.canvas:
+            self.canvas.delete('all')
+            self.canvas = None
+        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas.grid(row=0, column=0)
+        if not self.casa:
+            self.casa = CG()
+        fator = self.value_escala_global.get()
+        print(fator)
+        self.casa.escala_3D_global(self.canvas, fator)
         
         
 
