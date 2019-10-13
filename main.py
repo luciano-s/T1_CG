@@ -134,6 +134,10 @@ class App():
 
 
     def init_dialog_translacao(self):
+        proj = self.casa.projecao
+        self.casa = None
+        self.casa = CG()
+        self.casa.projecao = proj
         self.dialog_master = tk.Toplevel(self.master)
         self.dialog_master.geometry('350x100+%d+%d'% 
         (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
@@ -216,28 +220,24 @@ class App():
 
     def dialog_escala(self):
         
+        self.init_dialog_escala()
 
-        
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
-        self.canvas.grid(row=0, column=0)
-        self.init_dialog_translacao()
-
-        self.dialog_master.lift()
-        self.dialog_master.mainloop()
+        self.dialog_master_escala.lift()
+        self.dialog_master_escala.mainloop()
 
 
     def init_dialog_escala(self):
         self.dialog_master_escala = tk.Toplevel(self.master)
         self.dialog_master_escala.geometry('350x100+%d+%d'% 
         (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
-        self.button_set_escala = Button(self.dialog_master_rotacao, text="OK", command=self.call_escala)
+        self.button_set_escala = Button(self.dialog_master_escala, text="OK", command=self.call_escala)
         self.button_set_escala.grid(row=10, column=1, sticky=W)
 
         tk.Label(self.dialog_master_escala, text="Escala x:").grid(row=0, sticky=W)
         tk.Label(self.dialog_master_escala, text="Escala y:").grid(row=1, sticky=W)
         tk.Label(self.dialog_master_escala, text="Escala z:").grid(row=2, sticky=W)
         self.value_escala_x = tk.Entry(self.dialog_master_escala)
-        self.value_escala_.grid(row=0, column=1)
+        self.value_escala_x.grid(row=0, column=1)
         self.value_escala_y = tk.Entry(self.dialog_master_escala)
         self.value_escala_y.grid(row=1, column=1)
         self.value_escala_z = tk.Entry(self.dialog_master_escala)
@@ -425,26 +425,26 @@ class App():
 
 
     def call_escala(self):
-        # if self.canvas:
-        #     self.canvas.delete('all')
-        #     self.canvas = None
-        # self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
-        # self.canvas.grid(row=0, column=0)
+        if self.canvas:
+            self.canvas.delete('all')
+            self.canvas = None
+        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas.grid(row=0, column=0)
         axis = self.axis_escala.get()
         if axis == 1:
             try:
                 self.casa.escala_3D('x', float(self.value_escala_x.get()), self.canvas)
-            except:
+            except ValueError:
                 messagebox.showerror('Erro', 'O campo selecionado não pode ser vazio')
         elif axis == 2:
             try:
                 self.casa.escala_3D('y', float(self.value_escala_y.get()), self.canvas)
-            except:
+            except ValueError:
                 messagebox.showerror('Erro', 'O campo selecionado não pode ser vazio')
         elif axis == 3:
             try:
                 self.casa.escala_3D('z', float(self.value_escala_z.get()), self.canvas)
-            except:
+            except ValueError:
                 messagebox.showerror('Erro', 'O campo selecionado não pode ser vazio')
         
 
