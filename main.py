@@ -1,6 +1,6 @@
 from algorithms.cg import CG
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 from tests.cs_class import *
 from math import floor
 
@@ -25,7 +25,7 @@ class App():
         #adiciona os elementos aos itens de menu
         self.line.add_command(label='Novo', command=self.call_draw_line)
         self.circ.add_command(label='Novo', command=self.call_draw_circ)
-        self.house.add_command(label='Novo', command=self.call_draw_house)
+        self.house.add_command(label='Novo', command=self.call_reset_house)
         self.house.add_command(label='Escala Local', command=self.dialog_escala)
         self.house.add_command(label='Escala Global', command=self.dialog_escala_global)
         self.house.add_command(label='Translação', command=self.dialog_translacao)
@@ -136,10 +136,10 @@ class App():
 
 
     def init_dialog_translacao(self):
-        proj = self.casa.projecao
-        self.casa = None
-        self.casa = CG()
-        self.casa.projecao = proj
+        if self.casa == None:
+            self.casa = CG()
+            self.call_proj()
+        
         self.dialog_master = tk.Toplevel(self.master)
         self.dialog_master.geometry('350x100+%d+%d'% 
         (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
@@ -176,9 +176,10 @@ class App():
         
 
     def dialog_rotacao(self):
-        
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
-        self.canvas.grid(row=0, column=0)
+        if self.casa == None:
+            self.casa = CG()
+            self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+            self.canvas.grid(row=0, column=0)
         self.init_dialog_rotacao()
         self.dialog_master_rotacao.lift()
         self.dialog_master_rotacao.mainloop()
@@ -330,6 +331,37 @@ class App():
 
 
 # ----------INÍCIO MÉTODOS DE CHAMADA DOS MÉTODOS DA CLASSE CG-------------- #
+    def call_reset_house(self):
+        self.casa = CG()
+        ['Cavaleira', 'Cabinet', 'Ortogonal']
+        self.master_proj = tk.Toplevel(self.master)
+        self.master_proj.title('Selecione a Projeção')
+        self.master_proj.geometry('350x100+%d+%d'% 
+        (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
+        button_set_proj = Button(self.master_proj, text="OK", command=self.call_proj)
+        button_set_proj.grid(row=10, column=1, sticky=W)
+        self.combo_proj = ttk.Combobox(self.master_proj, 
+        values=['Cavaleira', 'Cabinet', 'Ortogonal'])
+        self.combo_proj.grid(row=0, column=0)
+        self.combo_proj.current(0)
+        
+        self.master_proj.mainloop()
+
+
+    def call_proj(self):
+        if self.canvas:
+            self.canvas.delete('all')
+            self.canvas = None
+        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas.grid(row=0, column=0)
+        if self.casa == None:
+            self.casa = CG()
+        if self.combo_proj.get() == 'Cavaleira':
+            self.call_cavaleira()
+        elif self.combo_proj.get() == 'Cabinet':
+            self.call_cabinet()
+        elif self.combo_proj.get() == 'Ortogonal':
+            self.dialog_projecao()
 
 
     def call_draw_line(self):

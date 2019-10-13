@@ -2,6 +2,7 @@ from tkinter import *
 import numpy as np
 import math
 
+# CLASSE QUE IMPLEMENTA A MAIORIA DOS ALGORITMOS UTILIZADOS
 
 class CG:
 
