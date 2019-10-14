@@ -196,7 +196,7 @@ class App():
     def init_dialog_rotacao(self):
         self.dialog_master_rotacao = tk.Toplevel(self.master)
         self.dialog_master_rotacao.title('Selecionar rotação')
-        self.dialog_master_rotacao.geometry('350x100+%d+%d'% 
+        self.dialog_master_rotacao.geometry('450x200+%d+%d'% 
         (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
         self.button_set_rotation = Button(self.dialog_master_rotacao, text="OK", command=self.call_rotacao)
         self.button_set_rotation.grid(row=10, column=1, sticky=W)
@@ -204,12 +204,15 @@ class App():
         tk.Label(self.dialog_master_rotacao, text="Rotação x:").grid(row=0, sticky=W)
         tk.Label(self.dialog_master_rotacao, text="Rotação y:").grid(row=1, sticky=W)
         tk.Label(self.dialog_master_rotacao, text="Rotação z:").grid(row=2, sticky=W)
+        tk.Label(self.dialog_master_rotacao, text="Rotação origem:").grid(row=3, sticky=W)
         self.value_rotation_x = tk.Entry(self.dialog_master_rotacao)
         self.value_rotation_x.grid(row=0, column=1)
         self.value_rotation_y = tk.Entry(self.dialog_master_rotacao)
         self.value_rotation_y.grid(row=1, column=1)
         self.value_rotation_z = tk.Entry(self.dialog_master_rotacao)
         self.value_rotation_z.grid(row=2, column=1)
+        self.value_rotation_org = tk.Entry(self.dialog_master_rotacao)
+        self.value_rotation_org.grid(row=3, column=1)
         self.axis_rotation = IntVar()
         
         
@@ -219,6 +222,8 @@ class App():
          variable=self.axis_rotation, value=2).grid(row=1, column=3, sticky=W)
         self.z_rot = tk.Radiobutton(self.dialog_master_rotacao, text='Z',
          variable=self.axis_rotation, value=3).grid(row=2, column=3, sticky=W)
+        self.or_rot = tk.Radiobutton(self.dialog_master_rotacao, text='Origem',
+        variable=self.axis_rotation, value=4).grid(row=3, column=3, sticky=W)
         # print('finished ')
 
 
@@ -545,7 +550,11 @@ class App():
                 self.casa.rotacao_3D(self.canvas, 'z', float(self.value_rotation_z.get()))
             except ValueError:
                 messagebox.showerror('Erro', 'O campo selecionado não pode ser vazio')
-
+        elif axis == 4:
+            try:
+                self.casa.rotacao_3D_global(self.canvas,'z', float(self.value_rotation_org.get()))
+            except ValueError:
+                messagebox.showerror('Erro', 'O campo selecionado não pode ser vazio')
 
     def call_escala(self):
         if self.canvas:

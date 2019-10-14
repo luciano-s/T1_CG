@@ -656,7 +656,7 @@ def main():
     #a.escala_3D('x', 2, canvas)
     # a.rotacao_3D(canvas, 'y', 90)
     print(f'called')
-    # a.escala_3D_global(canvas, 100)
+    # a.rotacao_3D_global(canvas, 100)
     # a.escala_3D_global(canvas, 0.10)
     root.mainloop()
 
