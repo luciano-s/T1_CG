@@ -352,6 +352,39 @@ class CG:
 
         CG.call_projecao(self, canvas)
 
+    def rotacao_3D_global(self, canvas, plano, graus):
+        if plano == 'z':
+            Mc = np.array([[math.cos(math.radians(graus)), -math.sin(math.radians(graus)), 0, 0],
+                           [math.sin(math.radians(graus)), math.cos(math.radians(graus)), 0, 0],
+                           [0, 0, 1, 0],
+                           [0, 0, 0, 1]])
+            print("rotação em z")
+        elif plano == 'y':
+            Mc = np.array([[math.cos(math.radians(graus)), 0, -math.sin(math.radians(graus)), 0],
+                           [0, 1, 0, 0],
+                           [math.sin(math.radians(graus)), 0, math.cos(math.radians(graus)), 0],
+                           [0, 0, 0, 1]])
+            print("rotação em y")
+        else:
+            Mc = np.array([[1, 0, 0, 0],
+                           [0, math.cos(math.radians(graus)), -math.sin(math.radians(graus)), 0],
+                           [0, math.sin(math.radians(graus)), math.cos(math.radians(graus)), 0],
+                           [0, 0, 0, 1]])
+            print("rotação em x")
+
+        self.A = np.dot(np.array(self.A), Mc)
+        self.B = np.dot(np.array(self.B), Mc)
+        self.C = np.dot(np.array(self.C), Mc)
+        self.D = np.dot(np.array(self.D), Mc)
+        self.E = np.dot(np.array(self.E), Mc)
+        self.F = np.dot(np.array(self.F), Mc)
+        self.G = np.dot(np.array(self.G), Mc)
+        self.H = np.dot(np.array(self.H), Mc)
+        self.I = np.dot(np.array(self.I), Mc)
+        self.J = np.dot(np.array(self.J), Mc)
+
+        CG.call_projecao(self, canvas)
+
 
     def cavaleira(self, canvas):
         self.projecao = 'cav'
