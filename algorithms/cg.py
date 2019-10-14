@@ -9,7 +9,7 @@ class CG:
 
     def __init__(self):
         self.center_x = 683
-        self.center_y = 330
+        self.center_y = 438
         self.A = [100, 100, 100, 1]
         self.B = [100, 100, 250, 1]
         self.C = [150, 100, 320, 1]
@@ -398,6 +398,7 @@ class CG:
         
         self.translacao_3D('x', self.center_x, canvas, False)
         self.translacao_3D('y', self.center_y, canvas, False)
+        
 
         self.A2 = np.dot(np.array(self.A), Mc)
         self.B2 = np.dot(np.array(self.B), Mc)
@@ -413,40 +414,40 @@ class CG:
         
         
 
-        canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
-            self.B2[coord1]), int(self.B2[coord2]), fill='black')
-        canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
-            self.E2[coord1]), int(self.E2[coord2]), fill='black')
-        canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
-            self.F2[coord1]), int(self.F2[coord2]), fill='black')
-        canvas.create_line(int(self.B2[coord1]), int(self.B2[coord2]), int(
-            self.C2[coord1]), int(self.C2[coord2]), fill='black')
-        canvas.create_line(int(self.B2[coord1]), int(self.B2[coord2]), int(
-            self.D2[coord1]), int(self.D2[coord2]), fill='black')
-        canvas.create_line(int(self.B2[coord1]), int(self.B2[coord2]), int(
-            self.G2[coord1]), int(self.G2[coord2]), fill='black')
-        canvas.create_line(int(self.C2[coord1]), int(self.C2[coord2]), int(
-            self.D2[coord1]), int(self.D2[coord2]), fill='black')
-        canvas.create_line(int(self.C2[coord1]), int(self.C2[coord2]), int(
-            self.H2[coord1]), int(self.H2[coord2]), fill='black')
-        canvas.create_line(int(self.D2[coord1]), int(self.D2[coord2]), int(
-            self.E2[coord1]), int(self.E2[coord2]), fill='black')
-        canvas.create_line(int(self.D2[coord1]), int(self.D2[coord2]), int(
-            self.I2[coord1]), int(self.I2[coord2]), fill='black')
-        canvas.create_line(int(self.E2[coord1]), int(self.E2[coord2]), int(
-            self.J2[coord1]), int(self.J2[coord2]), fill='black')
-        canvas.create_line(int(self.F2[coord1]), int(self.F2[coord2]), int(
-            self.G2[coord1]), int(self.G2[coord2]), fill='black')
-        canvas.create_line(int(self.F2[coord1]), int(self.F2[coord2]), int(
-            self.J2[coord1]), int(self.J2[coord2]), fill='black')
-        canvas.create_line(int(self.G2[coord1]), int(self.G2[coord2]), int(
-            self.H2[coord1]), int(self.H2[coord2]), fill='black')
-        canvas.create_line(int(self.G2[coord1]), int(self.G2[coord2]), int(
-            self.I2[coord1]), int(self.I2[coord2]), fill='black')
-        canvas.create_line(int(self.H2[coord1]), int(self.H2[coord2]), int(
-            self.I2[coord1]), int(self.I2[coord2]), fill='black')
-        canvas.create_line(int(self.I2[coord1]), int(self.I2[coord2]), int(
-            self.J2[coord1]), int(self.J2[coord2]), fill='black')
+        canvas.create_line(int(self.A2[coord1]), int(self.center_y*2-self.A2[coord2]), int(
+            self.B2[coord1]), int(self.center_y*2-self.B2[coord2]), fill='black')
+        canvas.create_line(int(self.A2[coord1]), int(self.center_y*2-self.A2[coord2]), int(
+            self.E2[coord1]), int(self.center_y*2-self.E2[coord2]), fill='black')
+        canvas.create_line(int(self.A2[coord1]), int(self.center_y*2-self.A2[coord2]), int(
+            self.F2[coord1]), int(self.center_y*2-self.F2[coord2]), fill='black')
+        canvas.create_line(int(self.B2[coord1]), int(self.center_y*2-self.B2[coord2]), int(
+            self.C2[coord1]), int(self.center_y*2-self.C2[coord2]), fill='black')
+        canvas.create_line(int(self.B2[coord1]), int(self.center_y*2-self.B2[coord2]), int(
+            self.D2[coord1]), int(self.center_y*2-self.D2[coord2]), fill='black')
+        canvas.create_line(int(self.B2[coord1]), int(self.center_y*2-self.B2[coord2]), int(
+            self.G2[coord1]), int(self.center_y*2-self.G2[coord2]), fill='black')
+        canvas.create_line(int(self.C2[coord1]), int(self.center_y*2-self.C2[coord2]), int(
+            self.D2[coord1]), int(self.center_y*2-self.D2[coord2]), fill='black')
+        canvas.create_line(int(self.C2[coord1]), int(self.center_y*2-self.C2[coord2]), int(
+            self.H2[coord1]), int(self.center_y*2-self.H2[coord2]), fill='black')
+        canvas.create_line(int(self.D2[coord1]), int(self.center_y*2-self.D2[coord2]), int(
+            self.E2[coord1]), int(self.center_y*2-self.E2[coord2]), fill='black')
+        canvas.create_line(int(self.D2[coord1]), int(self.center_y*2-self.D2[coord2]), int(
+            self.I2[coord1]), int(self.center_y*2-self.I2[coord2]), fill='black')
+        canvas.create_line(int(self.E2[coord1]), int(self.center_y*2-self.E2[coord2]), int(
+            self.J2[coord1]), int(self.center_y*2-self.J2[coord2]), fill='black')
+        canvas.create_line(int(self.F2[coord1]), int(self.center_y*2-self.F2[coord2]), int(
+            self.G2[coord1]), int(self.center_y*2-self.G2[coord2]), fill='black')
+        canvas.create_line(int(self.F2[coord1]), int(self.center_y*2-self.F2[coord2]), int(
+            self.J2[coord1]), int(self.center_y*2-self.J2[coord2]), fill='black')
+        canvas.create_line(int(self.G2[coord1]), int(self.center_y*2-self.G2[coord2]), int(
+            self.H2[coord1]), int(self.center_y*2-self.H2[coord2]), fill='black')
+        canvas.create_line(int(self.G2[coord1]), int(self.center_y*2-self.G2[coord2]), int(
+            self.I2[coord1]), int(self.center_y*2-self.I2[coord2]), fill='black')
+        canvas.create_line(int(self.H2[coord1]), int(self.center_y*2-self.H2[coord2]), int(
+            self.I2[coord1]), int(self.center_y*2-self.I2[coord2]), fill='black')
+        canvas.create_line(int(self.I2[coord1]), int(self.center_y*2-self.I2[coord2]), int(
+            self.J2[coord1]), int(self.center_y*2-self.J2[coord2]), fill='black')
 
 
         self.translacao_3D('x', -self.center_x, canvas, False)
@@ -512,40 +513,40 @@ class CG:
 
         print(f'x1={self.A2[coord1]}y1={self.A2[coord2]}x2={self.B2[coord1]}y2{self.B2[coord2]}')
 
-        canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
-            self.B2[coord1]), int(self.B2[coord2]), fill='black')
-        canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
-            self.E2[coord1]), int(self.E2[coord2]), fill='black')
-        canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
-            self.F2[coord1]), int(self.F2[coord2]), fill='black')
-        canvas.create_line(int(self.B2[coord1]), int(self.B2[coord2]), int(
-            self.C2[coord1]), int(self.C2[coord2]), fill='black')
-        canvas.create_line(int(self.B2[coord1]), int(self.B2[coord2]), int(
-            self.D2[coord1]), int(self.D2[coord2]), fill='black')
-        canvas.create_line(int(self.B2[coord1]), int(self.B2[coord2]), int(
-            self.G2[coord1]), int(self.G2[coord2]), fill='black')
-        canvas.create_line(int(self.C2[coord1]), int(self.C2[coord2]), int(
-            self.D2[coord1]), int(self.D2[coord2]), fill='black')
-        canvas.create_line(int(self.C2[coord1]), int(self.C2[coord2]), int(
-            self.H2[coord1]), int(self.H2[coord2]), fill='black')
-        canvas.create_line(int(self.D2[coord1]), int(self.D2[coord2]), int(
-            self.E2[coord1]), int(self.E2[coord2]), fill='black')
-        canvas.create_line(int(self.D2[coord1]), int(self.D2[coord2]), int(
-            self.I2[coord1]), int(self.I2[coord2]), fill='black')
-        canvas.create_line(int(self.E2[coord1]), int(self.E2[coord2]), int(
-            self.J2[coord1]), int(self.J2[coord2]), fill='black')
-        canvas.create_line(int(self.F2[coord1]), int(self.F2[coord2]), int(
-            self.G2[coord1]), int(self.G2[coord2]), fill='black')
-        canvas.create_line(int(self.F2[coord1]), int(self.F2[coord2]), int(
-            self.J2[coord1]), int(self.J2[coord2]), fill='black')
-        canvas.create_line(int(self.G2[coord1]), int(self.G2[coord2]), int(
-            self.H2[coord1]), int(self.H2[coord2]), fill='black')
-        canvas.create_line(int(self.G2[coord1]), int(self.G2[coord2]), int(
-            self.I2[coord1]), int(self.I2[coord2]), fill='black')
-        canvas.create_line(int(self.H2[coord1]), int(self.H2[coord2]), int(
-            self.I2[coord1]), int(self.I2[coord2]), fill='black')
-        canvas.create_line(int(self.I2[coord1]), int(self.I2[coord2]), int(
-            self.J2[coord1]), int(self.J2[coord2]), fill='black')
+        canvas.create_line(int(self.A2[coord1]), int(self.center_y*2 - self.A2[coord2]), int(
+            self.B2[coord1]), int(self.center_y*2 - self.B2[coord2]), fill='black')
+        canvas.create_line(int(self.A2[coord1]), int(self.center_y*2 - self.A2[coord2]), int(
+            self.E2[coord1]), int(self.center_y*2 - self.E2[coord2]), fill='black')
+        canvas.create_line(int(self.A2[coord1]), int(self.center_y*2 - self.A2[coord2]), int(
+            self.F2[coord1]), int(self.center_y*2 - self.F2[coord2]), fill='black')
+        canvas.create_line(int(self.B2[coord1]), int(self.center_y*2 - self.B2[coord2]), int(
+            self.C2[coord1]), int(self.center_y*2 - self.C2[coord2]), fill='black')
+        canvas.create_line(int(self.B2[coord1]), int(self.center_y*2 - self.B2[coord2]), int(
+            self.D2[coord1]), int(self.center_y*2 - self.D2[coord2]), fill='black')
+        canvas.create_line(int(self.B2[coord1]), int(self.center_y*2 - self.B2[coord2]), int(
+            self.G2[coord1]), int(self.center_y*2 - self.G2[coord2]), fill='black')
+        canvas.create_line(int(self.C2[coord1]), int(self.center_y*2 - self.C2[coord2]), int(
+            self.D2[coord1]), int(self.center_y*2 - self.D2[coord2]), fill='black')
+        canvas.create_line(int(self.C2[coord1]), int(self.center_y*2 - self.C2[coord2]), int(
+            self.H2[coord1]), int(self.center_y*2 - self.H2[coord2]), fill='black')
+        canvas.create_line(int(self.D2[coord1]), int(self.center_y*2 - self.D2[coord2]), int(
+            self.E2[coord1]), int(self.center_y*2 - self.E2[coord2]), fill='black')
+        canvas.create_line(int(self.D2[coord1]), int(self.center_y*2 - self.D2[coord2]), int(
+            self.I2[coord1]), int(self.center_y*2 - self.I2[coord2]), fill='black')
+        canvas.create_line(int(self.E2[coord1]), int(self.center_y*2 - self.E2[coord2]), int(
+            self.J2[coord1]), int(self.center_y*2 - self.J2[coord2]), fill='black')
+        canvas.create_line(int(self.F2[coord1]), int(self.center_y*2 - self.F2[coord2]), int(
+            self.G2[coord1]), int(self.center_y*2 - self.G2[coord2]), fill='black')
+        canvas.create_line(int(self.F2[coord1]), int(self.center_y*2 - self.F2[coord2]), int(
+            self.J2[coord1]), int(self.center_y*2 - self.J2[coord2]), fill='black')
+        canvas.create_line(int(self.G2[coord1]), int(self.center_y*2 - self.G2[coord2]), int(
+            self.H2[coord1]), int(self.center_y*2 - self.H2[coord2]), fill='black')
+        canvas.create_line(int(self.G2[coord1]), int(self.center_y*2 - self.G2[coord2]), int(
+            self.I2[coord1]), int(self.center_y*2 - self.I2[coord2]), fill='black')
+        canvas.create_line(int(self.H2[coord1]), int(self.center_y*2 - self.H2[coord2]), int(
+            self.I2[coord1]), int(self.center_y*2 - self.I2[coord2]), fill='black')
+        canvas.create_line(int(self.I2[coord1]), int(self.center_y*2 - self.I2[coord2]), int(
+            self.J2[coord1]), int(self.center_y*2 - self.J2[coord2]), fill='black')
 
 
     def cabinet(self, canvas):
@@ -570,41 +571,41 @@ class CG:
         self.H2 = np.dot(np.array(self.H), Mc)
         self.I2 = np.dot(np.array(self.I), Mc)
         self.J2 = np.dot(np.array(self.J), Mc)
-        print(f'x1={self.A2[coord1]}y1={self.A2[coord2]}x2={self.B2[coord1]}y2{self.B2[coord2]}')
-        canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
-            self.B2[coord1]), int(self.B2[coord2]), fill='black')
-        canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
-            self.E2[coord1]), int(self.E2[coord2]), fill='black')
-        canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
-            self.F2[coord1]), int(self.F2[coord2]), fill='black')
-        canvas.create_line(int(self.B2[coord1]), int(self.B2[coord2]), int(
-            self.C2[coord1]), int(self.C2[coord2]), fill='black')
-        canvas.create_line(int(self.B2[coord1]), int(self.B2[coord2]), int(
-            self.D2[coord1]), int(self.D2[coord2]), fill='black')
-        canvas.create_line(int(self.B2[coord1]), int(self.B2[coord2]), int(
-            self.G2[coord1]), int(self.G2[coord2]), fill='black')
-        canvas.create_line(int(self.C2[coord1]), int(self.C2[coord2]), int(
-            self.D2[coord1]), int(self.D2[coord2]), fill='black')
-        canvas.create_line(int(self.C2[coord1]), int(self.C2[coord2]), int(
-            self.H2[coord1]), int(self.H2[coord2]), fill='black')
-        canvas.create_line(int(self.D2[coord1]), int(self.D2[coord2]), int(
-            self.E2[coord1]), int(self.E2[coord2]), fill='black')
-        canvas.create_line(int(self.D2[coord1]), int(self.D2[coord2]), int(
-            self.I2[coord1]), int(self.I2[coord2]), fill='black')
-        canvas.create_line(int(self.E2[coord1]), int(self.E2[coord2]), int(
-            self.J2[coord1]), int(self.J2[coord2]), fill='black')
-        canvas.create_line(int(self.F2[coord1]), int(self.F2[coord2]), int(
-            self.G2[coord1]), int(self.G2[coord2]), fill='black')
-        canvas.create_line(int(self.F2[coord1]), int(self.F2[coord2]), int(
-            self.J2[coord1]), int(self.J2[coord2]), fill='black')
-        canvas.create_line(int(self.G2[coord1]), int(self.G2[coord2]), int(
-            self.H2[coord1]), int(self.H2[coord2]), fill='black')
-        canvas.create_line(int(self.G2[coord1]), int(self.G2[coord2]), int(
-            self.I2[coord1]), int(self.I2[coord2]), fill='black')
-        canvas.create_line(int(self.H2[coord1]), int(self.H2[coord2]), int(
-            self.I2[coord1]), int(self.I2[coord2]), fill='black')
-        canvas.create_line(int(self.I2[coord1]), int(self.I2[coord2]), int(
-            self.J2[coord1]), int(self.J2[coord2]), fill='black')
+        print(f'x1={self.A2[coord1]}y1={self.A2[coord2]}x2={self.B2[coord1]}y2{self.center_y*2 - self.B2[coord2]}')
+        canvas.create_line(int(self.A2[coord1]), int(self.center_y*2 - self.A2[coord2]), int(
+            self.B2[coord1]), int(self.center_y*2 - self.B2[coord2]), fill='black')
+        canvas.create_line(int(self.A2[coord1]), int(self.center_y*2 - self.A2[coord2]), int(
+            self.E2[coord1]), int(self.center_y*2 - self.E2[coord2]), fill='black')
+        canvas.create_line(int(self.A2[coord1]), int(self.center_y*2 - self.A2[coord2]), int(
+            self.F2[coord1]), int(self.center_y*2 - self.F2[coord2]), fill='black')
+        canvas.create_line(int(self.B2[coord1]), int(self.center_y*2 - self.B2[coord2]), int(
+            self.C2[coord1]), int(self.center_y*2 - self.C2[coord2]), fill='black')
+        canvas.create_line(int(self.B2[coord1]), int(self.center_y*2 - self.B2[coord2]), int(
+            self.D2[coord1]), int(self.center_y*2 - self.D2[coord2]), fill='black')
+        canvas.create_line(int(self.B2[coord1]), int(self.center_y*2 - self.B2[coord2]), int(
+            self.G2[coord1]), int(self.center_y*2 - self.G2[coord2]), fill='black')
+        canvas.create_line(int(self.C2[coord1]), int(self.center_y*2 - self.C2[coord2]), int(
+            self.D2[coord1]), int(self.center_y*2 - self.D2[coord2]), fill='black')
+        canvas.create_line(int(self.C2[coord1]), int(self.center_y*2 - self.C2[coord2]), int(
+            self.H2[coord1]), int(self.center_y*2 - self.H2[coord2]), fill='black')
+        canvas.create_line(int(self.D2[coord1]), int(self.center_y*2 - self.D2[coord2]), int(
+            self.E2[coord1]), int(self.center_y*2 - self.E2[coord2]), fill='black')
+        canvas.create_line(int(self.D2[coord1]), int(self.center_y*2 - self.D2[coord2]), int(
+            self.I2[coord1]), int(self.center_y*2 - self.I2[coord2]), fill='black')
+        canvas.create_line(int(self.E2[coord1]), int(self.center_y*2 - self.E2[coord2]), int(
+            self.J2[coord1]), int(self.center_y*2 - self.J2[coord2]), fill='black')
+        canvas.create_line(int(self.F2[coord1]), int(self.center_y*2 - self.F2[coord2]), int(
+            self.G2[coord1]), int(self.center_y*2 - self.G2[coord2]), fill='black')
+        canvas.create_line(int(self.F2[coord1]), int(self.center_y*2 - self.F2[coord2]), int(
+            self.J2[coord1]), int(self.center_y*2 - self.J2[coord2]), fill='black')
+        canvas.create_line(int(self.G2[coord1]), int(self.center_y*2 - self.G2[coord2]), int(
+            self.H2[coord1]), int(self.center_y*2 - self.H2[coord2]), fill='black')
+        canvas.create_line(int(self.G2[coord1]), int(self.center_y*2 - self.G2[coord2]), int(
+            self.I2[coord1]), int(self.center_y*2 - self.I2[coord2]), fill='black')
+        canvas.create_line(int(self.H2[coord1]), int(self.center_y*2 - self.H2[coord2]), int(
+            self.I2[coord1]), int(self.center_y*2 - self.I2[coord2]), fill='black')
+        canvas.create_line(int(self.I2[coord1]), int(self.center_y*2 - self.I2[coord2]), int(
+            self.J2[coord1]), int(self.center_y*2 - self.J2[coord2]), fill='black')
         
         self.translacao_3D('x', -self.center_x, canvas, False)
         self.translacao_3D('y', -self.center_y, canvas, False)
