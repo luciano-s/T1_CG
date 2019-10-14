@@ -641,7 +641,7 @@ def main():
     root.geometry('%dx%d+%d+%d'% (200, 300, root.winfo_screenheight()/2, root.winfo_screenwidth()/2))
     root.title('Trabalho de Computação Gráfica')
     App(root)
-    root.attributes('-zoomed', True)
+    #root.attributes('-zoomed', True)
     root.mainloop()
 
 
