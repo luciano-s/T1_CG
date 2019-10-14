@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import numpy as np
 import math
 
@@ -476,6 +477,8 @@ class CG:
             self.translacao_3D('x', -self.center_x, canvas, False)
             self.translacao_3D('z', -self.center_y, canvas, False)
 
+        print(f'x1={self.A2[coord1]}y1={self.A2[coord2]}x2={self.B2[coord1]}y2{self.B2[coord2]}')
+
         canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
             self.B2[coord1]), int(self.B2[coord2]), fill='black')
         canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
@@ -534,7 +537,7 @@ class CG:
         self.H2 = np.dot(np.array(self.H), Mc)
         self.I2 = np.dot(np.array(self.I), Mc)
         self.J2 = np.dot(np.array(self.J), Mc)
-
+        print(f'x1={self.A2[coord1]}y1={self.A2[coord2]}x2={self.B2[coord1]}y2{self.B2[coord2]}')
         canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
             self.B2[coord1]), int(self.B2[coord2]), fill='black')
         canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
@@ -569,14 +572,24 @@ class CG:
             self.I2[coord1]), int(self.I2[coord2]), fill='black')
         canvas.create_line(int(self.I2[coord1]), int(self.I2[coord2]), int(
             self.J2[coord1]), int(self.J2[coord2]), fill='black')
+        
         self.translacao_3D('x', -self.center_x, canvas, False)
         self.translacao_3D('y', -self.center_y, canvas, False)
 
     def shearing_3D(self, canvas, shx=0, shy=0, shz=0):
-        Msh = np.array([[1, float(shx), float(shx), 0],
+        if shx == '':
+            shx=0
+        if shy == '':
+            shy=0
+        if shz=='':
+            shz=0
+        try:
+            Msh = np.array([[1, float(shx), float(shx), 0],
                         [float(shy), 1, float(shy), 0],
                         [float(shz), float(shy), 1, 0],
                         [  0,   0, 0, 1]])
+        except ValueError:
+            messagebox.showerror('Erro', 'Ao menos um eixo deve aplicar o cisalhamento no eixo selecionado!')
         
         self.A = np.dot(np.array(self.A), Msh)
         self.B = np.dot(np.array(self.B), Msh)

@@ -148,6 +148,7 @@ class App():
             self.call_proj()
         
         self.dialog_master = tk.Toplevel(self.master)
+        self.dialog_master.title('Selecionar translação')
         self.dialog_master.geometry('350x100+%d+%d'% 
         (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
         self.button_set_translation = Button(self.dialog_master, text="OK", command=self.dialog_get_data)
@@ -194,6 +195,7 @@ class App():
 
     def init_dialog_rotacao(self):
         self.dialog_master_rotacao = tk.Toplevel(self.master)
+        self.dialog_master_rotacao.title('Selecionar rotação')
         self.dialog_master_rotacao.geometry('350x100+%d+%d'% 
         (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
         self.button_set_rotation = Button(self.dialog_master_rotacao, text="OK", command=self.call_rotacao)
@@ -230,6 +232,7 @@ class App():
 
     def init_dialog_escala(self):
         self.dialog_master_escala = tk.Toplevel(self.master)
+        self.dialog_master_escala.title('Selecionar escala')
         self.dialog_master_escala.geometry('350x100+%d+%d'% 
         (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
         self.button_set_escala = Button(self.dialog_master_escala, text="OK", command=self.call_escala)
@@ -306,7 +309,7 @@ class App():
 
     def init_dialog_shearing(self):
         self.dialog_master_shearing = tk.Toplevel(self.master)
-        self.dialog_master_shearing.title('Selecionar Plano de Projeção')
+        self.dialog_master_shearing.title('Selecionar fator e eixo de cisalhamento')
         self.dialog_master_shearing.geometry('350x100+%d+%d'% 
         (self.master.winfo_screenwidth()/2,self.master.winfo_screenheight()/2))
         self.button_set_shearing = Button(self.dialog_master_shearing, text="OK", command=self.call_shearing)
@@ -494,7 +497,7 @@ class App():
             except:
                 messagebox.showerror("Erro", "Campos selecionados não podem ser vazios!")
 
-        elif z!= None:
+        elif z!= None:  
             # passa z
             try:
                 self.casa.translacao_3D('z', int(translacao[0]), self.canvas, True)
@@ -526,7 +529,7 @@ class App():
         self.canvas.grid(row=0, column=0)
         print('call_rotation')
         axis = self.axis_rotation.get()
-        print(f'axis: {axis}')
+        print(f'axis: {axis}')  
         if axis == 1:
             try:
                 self.casa.rotacao_3D(self.canvas, 'x', float(self.value_rotation_x.get()))
