@@ -7,6 +7,8 @@ import math
 class CG:
 
     def __init__(self):
+        self.center_x = 683
+        self.center_y = 330
         self.A = [100, 100, 100, 1]
         self.B = [100, 100, 250, 1]
         self.C = [150, 100, 320, 1]
@@ -31,6 +33,8 @@ class CG:
 
         self.projecao = None
         self.plano = None
+
+        
 
         #self.figura = {'A': [self.A, self.A2, 'B', 'E', 'F'], 'B': [self.B, self.B2, 'C', 'D', 'G'],
         #               'C': [self.C, self.C2, 'D', 'H'], 'D': [self.D, self.D2, 'E', 'I'], 'E': [self.E, self.E2, 'J'],
@@ -182,7 +186,7 @@ class CG:
         if self.projecao == 'cav':
             self.cavaleira(canvas)
         elif self.projecao == 'ort':
-            self.ortogonal(canvas, self.plano)
+            self.ortogonal(canvas, self.plano, self.center_x, self.center_y)
         else:
             self.cabinet(canvas)
 
@@ -357,6 +361,10 @@ class CG:
                        [0, 0, 0, 1]])
         coord1 = 0
         coord2 = 1
+        
+        self.translacao_3D('x', self.center_x, canvas, False)
+        self.translacao_3D('y', self.center_y, canvas, False)
+
         self.A2 = np.dot(np.array(self.A), Mc)
         self.B2 = np.dot(np.array(self.B), Mc)
         self.C2 = np.dot(np.array(self.C), Mc)
@@ -367,6 +375,9 @@ class CG:
         self.H2 = np.dot(np.array(self.H), Mc)
         self.I2 = np.dot(np.array(self.I), Mc)
         self.J2 = np.dot(np.array(self.J), Mc)
+
+        
+        
 
         canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
             self.B2[coord1]), int(self.B2[coord2]), fill='black')
@@ -404,7 +415,10 @@ class CG:
             self.J2[coord1]), int(self.J2[coord2]), fill='black')
 
 
-    def ortogonal(self, canvas, plano):
+        self.translacao_3D('x', -self.center_x, canvas, False)
+        self.translacao_3D('y', -self.center_y, canvas, False)
+
+    def ortogonal(self, canvas, plano, center_x, center_y   ):
         self.plano = plano
         self.projecao = 'ort'
         if plano == 'z':
@@ -415,6 +429,9 @@ class CG:
             coord1 = 0
             coord2 = 1
             print("z")
+            self.translacao_3D('x', self.center_x, canvas, False)
+            self.translacao_3D('y', self.center_y, canvas, False)
+
         elif plano == 'y':
             Mc = np.array([[1, 0, 0, 0],
                            [0, 0, 0, 0],
@@ -423,6 +440,8 @@ class CG:
             coord1 = 0
             coord2 = 2
             print("y")
+            self.translacao_3D('x', self.center_x, canvas, False)
+            self.translacao_3D('z', self.center_y, canvas, False)
         else:
             Mc = np.array([[0, 0, 0, 0],
                            [0, 1, 0, 0],
@@ -431,6 +450,8 @@ class CG:
             coord1 = 1
             coord2 = 2
             print("x")
+            self.translacao_3D('y', self.center_x, canvas, False)
+            self.translacao_3D('z', self.center_y, canvas, False)
 
         self.A2 = np.dot(np.array(self.A), Mc)
         self.B2 = np.dot(np.array(self.B), Mc)
@@ -442,6 +463,18 @@ class CG:
         self.H2 = np.dot(np.array(self.H), Mc)
         self.I2 = np.dot(np.array(self.I), Mc)
         self.J2 = np.dot(np.array(self.J), Mc)
+        
+        if plano == 'z':
+            self.translacao_3D('x', -self.center_x, canvas, False)
+            self.translacao_3D('y', -self.center_y, canvas, False)
+        
+        elif plano == 'x':
+            self.translacao_3D('y', -self.center_x, canvas, False)
+            self.translacao_3D('z', -self.center_y, canvas, False)
+        
+        elif plano == 'y':
+            self.translacao_3D('x', -self.center_x, canvas, False)
+            self.translacao_3D('z', -self.center_y, canvas, False)
 
         canvas.create_line(int(self.A2[coord1]), int(self.A2[coord2]), int(
             self.B2[coord1]), int(self.B2[coord2]), fill='black')
@@ -487,7 +520,10 @@ class CG:
                        [0, 0, 0, 1]])
         coord1 = 0
         coord2 = 1
-
+        
+        self.translacao_3D('x', self.center_x, canvas, False)
+        self.translacao_3D('y', self.center_y, canvas, False)
+        
         self.A2 = np.dot(np.array(self.A), Mc)
         self.B2 = np.dot(np.array(self.B), Mc)
         self.C2 = np.dot(np.array(self.C), Mc)
@@ -533,7 +569,8 @@ class CG:
             self.I2[coord1]), int(self.I2[coord2]), fill='black')
         canvas.create_line(int(self.I2[coord1]), int(self.I2[coord2]), int(
             self.J2[coord1]), int(self.J2[coord2]), fill='black')
-
+        self.translacao_3D('x', -self.center_x, canvas, False)
+        self.translacao_3D('y', -self.center_y, canvas, False)
 
     def shearing_3D(self, canvas, shx=0, shy=0, shz=0):
         Msh = np.array([[1, float(shx), float(shx), 0],

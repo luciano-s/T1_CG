@@ -3,11 +3,18 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 from tests.cs_class import *
 from math import floor
+# 683 --> x
 
-
+# 438 --> y
 class App():
 
     def __init__(self, master=None):
+        self.center_x = master.winfo_screenwidth()/2
+        self.center_y = master.winfo_screenheight()/2
+        
+        print(self.center_x)
+        print(self.center_y)
+
         self.canvas = None
         #passa o master Tk()
         self.master = master
@@ -178,7 +185,7 @@ class App():
     def dialog_rotacao(self):
         if self.casa == None:
             self.casa = CG()
-            self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+            self.canvas = tk.Canvas(self.master, height=768, width=1366, background="#ffffff")
             self.canvas.grid(row=0, column=0)
         self.init_dialog_rotacao()
         self.dialog_master_rotacao.lift()
@@ -352,7 +359,7 @@ class App():
         if self.canvas:
             self.canvas.delete('all')
             self.canvas = None
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas = tk.Canvas(self.master, height=768, width=1366, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         if self.casa == None:
             self.casa = CG()
@@ -368,7 +375,7 @@ class App():
         if self.canvas:
             self.canvas.delete('all')
             self.canvas = None
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas = tk.Canvas(self.master, height=768, width=1366, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         self.canvas.bind("<Button-1>", self.mouse_click_line)
         self.canvas.bind("<ButtonRelease-1>", self.mouse_release_line)
@@ -380,7 +387,7 @@ class App():
             self.canvas = None
 
         
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas = tk.Canvas(self.master, height=768, width=1366, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         self.canvas.bind("<Button-1>", self.mouse_click_circ)
         self.canvas.bind("<ButtonRelease-1>", self.mouse_release_circ)
@@ -390,7 +397,7 @@ class App():
         if self.canvas:
             self.canvas.delete('all')
             self.canvas = None
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas = tk.Canvas(self.master, height=768, width=1366, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         
         a = CS(self.canvas)
@@ -402,7 +409,7 @@ class App():
         if self.canvas:
             self.canvas.delete('all')
             self.canvas = None
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas = tk.Canvas(self.master, height=768, width=1366, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         self.canvas.bind("<Button-1>", self.mouse_click_house)
         self.canvas.bind("<ButtonRelease-1>", self.mouse_release_house)
@@ -412,7 +419,7 @@ class App():
         if self.canvas:
             self.canvas.delete('all')
             self.canvas = None
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas = tk.Canvas(self.master, height=768, width=1366, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         
         self.casa.projecao = 'cav'
@@ -425,7 +432,7 @@ class App():
         if self.canvas:
             self.canvas.delete('all')
             self.canvas = None
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas = tk.Canvas(self.master, height=768, width=1366, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         
         self.casa.projecao = ''
@@ -438,7 +445,7 @@ class App():
         if self.canvas:
             self.canvas.delete('all')
             self.canvas = None
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas = tk.Canvas(self.master, height=768, width=1366, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         if x==y==z!=None:
             # passa x  y z
@@ -496,25 +503,26 @@ class App():
 
 
     def call_ortogonal(self):
-        if self.canvas:
+        if self.canvas: 
             self.canvas.delete('all')
             self.canvas = None
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas = tk.Canvas(self.master, height=768, width=1366, background="#ffffff")
         self.canvas.grid(row=0, column=0)
-        self.casa = CG()
+        if self.casa == None:
+            self.casa = CG()
         if self.plano_proj.get() == 1:
-            self.casa.ortogonal(self.canvas, 'z')   
+            self.casa.ortogonal(self.canvas, 'z', self.center_x, self.center_y)   
         elif self.plano_proj.get() == 2:
-            self.casa.ortogonal(self.canvas, 'x')
+            self.casa.ortogonal(self.canvas, 'x', self.center_x, self.center_y)
         elif self.plano_proj.get() == 3:
-                self.casa.ortogonal(self.canvas, 'y')
+                self.casa.ortogonal(self.canvas, 'y', self.center_x, self.center_y)
     
 
     def call_rotacao(self):
         if self.canvas:
             self.canvas.delete('all')
             self.canvas = None
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas = tk.Canvas(self.master, height=768, width=1366, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         print('call_rotation')
         axis = self.axis_rotation.get()
@@ -540,7 +548,7 @@ class App():
         if self.canvas:
             self.canvas.delete('all')
             self.canvas = None
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas = tk.Canvas(self.master, height=768, width=1366, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         axis = self.axis_escala.get()
 
@@ -566,7 +574,7 @@ class App():
         if self.canvas:
             self.canvas.delete('all')
             self.canvas = None
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas = tk.Canvas(self.master, height=768, width=1366, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         if not self.casa:
             self.casa = CG()
@@ -581,7 +589,7 @@ class App():
             self.canvas = None
         if self.casa == None:
             self.casa = CG()
-        self.canvas = tk.Canvas(self.master, height=2000, width=2000, background="#ffffff")
+        self.canvas = tk.Canvas(self.master, height=768, width=1366, background="#ffffff")
         self.canvas.grid(row=0, column=0)
         print(self.value_shearing_y.get())
         print(self.value_shearing_z.get())
